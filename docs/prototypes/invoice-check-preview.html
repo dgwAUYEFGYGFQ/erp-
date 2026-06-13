@@ -246,6 +246,7 @@
                 <span>剩余差异：</span>
                 <el-input size="small" style="width:190px" model-value="" disabled></el-input>
                 <el-button type="primary" size="small" @click="addAdjustment"><i class="ri-add-line"></i> 新增一行数据</el-button>
+                <el-button type="danger" plain size="small" @click="batchDeleteAdjustments">删除</el-button>
               </div>
               <el-tag size="small" type="info">调整合计：{{ money(adjustmentTotal) }}</el-tag>
             </div>
@@ -490,6 +491,24 @@
             return;
           }
           this.adjustments = this.adjustments.filter((item) => item.id !== row.id);
+          this.selectedAdjustments = this.selectedAdjustments.filter((item) => item.id !== row.id);
+        },
+        batchDeleteAdjustments() {
+          if (!this.selectedAdjustments.length) {
+            ElementPlus.ElMessage.warning('请先选择需要删除的数据');
+            return;
+          }
+          ElementPlus.ElMessageBox.confirm('确认删除已选中的附加费用信息吗？', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            const selectedIds = this.selectedAdjustments.map((item) => item.id);
+            const remainedRows = this.adjustments.filter((item) => !selectedIds.includes(item.id));
+            this.adjustments = remainedRows.length ? remainedRows : [this.createEmptyAdjustmentRow()];
+            this.selectedAdjustments = [];
+            ElementPlus.ElMessage.success('已删除选中的附加费用信息');
+          }).catch(() => {});
         },
         onTypeChange(row) {
           row.serialNo = '';
