@@ -120,6 +120,16 @@
     .attachment-hidden-input {
       display: none;
     }
+    .row-delete-link {
+      color: #f56c6c;
+      font-size: 12px;
+      line-height: 1;
+      padding: 0;
+    }
+    .row-delete-link:hover {
+      color: #e64545;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -280,7 +290,11 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="90" fixed="right" align="center"><template #default="scope"><el-button link type="danger" size="small" @click="removeAdjustment(scope.row)">删除</el-button></template></el-table-column>
+              <el-table-column label="操作" width="90" fixed="right" align="center">
+                <template #default="scope">
+                  <el-button class="row-delete-link" link type="danger" size="small" @click="removeAdjustment(scope.row)">删除</el-button>
+                </template>
+              </el-table-column>
             </el-table>
             <div class="footer-line"><span>共 {{ adjustments.length }} 条，已选 {{ selectedAdjustments.length }} 条</span></div>
           </div>
@@ -451,6 +465,9 @@
         addAdjustment() {
           this.adjustments.push({ id: 'ADJ-' + String(this.adjustments.length + 1).padStart(3, '0'), adjustmentType: '', serialNo: '', taxIncludedAmount: 0, remark: '', attachment: '' });
         },
+        createEmptyAdjustmentRow() {
+          return { id: 'ADJ-' + String(Date.now()).slice(-6), adjustmentType: '', serialNo: '', taxIncludedAmount: 0, remark: '', attachment: '' };
+        },
         triggerAttachment(row) {
           const ref = this.$refs['attachmentInput-' + row.id];
           const input = Array.isArray(ref) ? ref[0] : ref;
@@ -469,7 +486,7 @@
         },
         removeAdjustment(row) {
           if (this.adjustments.length === 1) {
-            ElementPlus.ElMessage.warning('至少保留一行附加费用信息');
+            this.adjustments = [this.createEmptyAdjustmentRow()];
             return;
           }
           this.adjustments = this.adjustments.filter((item) => item.id !== row.id);
