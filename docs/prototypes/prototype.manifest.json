@@ -6,7 +6,7 @@
     "brandName": "CHiNT 采购云",
     "entry": "docs/prototypes/Layout.html#/supplier/reconciliation-list",
     "fallbackRoute": "#/supplier/reconciliation-list",
-    "routeCount": 6,
+    "routeCount": 8,
     "moduleCount": 1,
     "usesECharts": false,
     "usesTenant": false,
@@ -89,6 +89,23 @@
           "keyInteractions": ["只读查看", "附件查看"]
         },
         {
+          "path": "#/buyer/paid-invoice-detail",
+          "name": "供方已开票列表详情",
+          "menuKey": "buyerReconciliationList",
+          "component": "OrderScreenshotReplicaPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["新能订单管理", "供方已开票列表", "供方已开票列表详情"],
+          "tabInfo": "采购方只读查看已开票详情，并在对账单明细信息中查看入库单附加费用。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["供方已开票单", "对账单明细", "附加费用"],
+          "outboundRoutes": [],
+          "keyInteractions": ["发票信息查看", "附加费用只读查看", "附件查看"]
+        },
+        {
           "path": "#/supplier/invoice-create",
           "name": "待开票列表-新增",
           "menuKey": "supplierInvoiceCreate",
@@ -104,6 +121,23 @@
           "linkedBusinessObjects": ["待开票单", "入库对账单", "附加费用"],
           "outboundRoutes": [],
           "keyInteractions": ["已确认对账单选择", "附加费用只读核对"]
+        },
+        {
+          "path": "#/supplier/paid-invoice-detail",
+          "name": "已开票列表详情",
+          "menuKey": "supplierInvoiceCreate",
+          "component": "OrderScreenshotReplicaPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["订单履约协同", "已开票列表", "已开票列表详情"],
+          "tabInfo": "供应商只读查看已开票详情，并在对账单明细信息中查看入库单附加费用。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["已开票单", "对账单明细", "附加费用"],
+          "outboundRoutes": [],
+          "keyInteractions": ["发票信息查看", "附加费用只读查看", "附件查看"]
         },
         {
           "path": "#/invoice/check-detail",
