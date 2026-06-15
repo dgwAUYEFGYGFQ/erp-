@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>采购云 ERP 订单模块改造原型</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.13.7/dist/index.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" />
+  <link rel="stylesheet" href="./_shared/Shared.css" />
+  <link rel="stylesheet" href="./_shared/Layout.css" />
+</head>
+<body>
+  <div id="app" v-cloak></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.5.32/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.13.7/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="./_shared/prototype-core.js"></script>
+  <script src="./_shared/prototype-menu.js"></script>
+  <script src="./_shared/prototype-data.js"></script>
+  <script src="./_shared/prototype-route.js"></script>
+  <script src="./_shared/prototype-components.js"></script>
+  <script src="./_shared/prototype-shell.js"></script>
+
+  <!-- module route scripts start -->
+  <script src="./modules/order-erp/reconciliation.js"></script>
+  <!-- module route scripts end -->
+
+  <script>
+    const embeddedMockData = {
+      app: {
+        brandName: 'CHiNT 采购云',
+        brandIcon: 'ri-shopping-bag-3-line',
+        fallbackRoute: '#/supplier/reconciliation-list',
+        menuSwitcher: { enabled: false },
+        user: { name: '李思锦', role: '订单协同用户', avatarText: '李' },
+        messages: [
+          { id: 'MSG-ORDER-001', title: '供应商基础信息更新，请尽快处理待确认事项', time: '今天 09:12', type: 'info' },
+          { id: 'MSG-ORDER-002', title: '入库对账单 RK009202606120003 等待采购确认', time: '今天 08:40', type: 'warning' }
+        ],
+        menus: [
+          {
+            title: '订单履约协同',
+            items: [
+              { key: 'supplierReconciliationList', label: '入库对账单列表', icon: 'ri-file-list-3-line', route: '#/supplier/reconciliation-list' },
+              { key: 'supplierInvoiceCreate', label: '待开票列表-新增', icon: 'ri-bill-line', route: '#/supplier/invoice-create' }
+            ]
+          },
+          {
+            title: '新能订单管理',
+            items: [
+              { key: 'buyerReconciliationList', label: '入库对账单列表', icon: 'ri-file-check-line', route: '#/buyer/reconciliation-list' },
+              { key: 'invoiceCheckDetail', label: '发票校验单详情', icon: 'ri-draft-line', route: '#/invoice/check-detail' }
+            ]
+          }
+        ]
+      }
+    };
+
+    ChintPrototypeShell.bootstrap({
+      dataUrl: './data.json',
+      fallbackMockData: embeddedMockData,
+      mountSelector: '#app',
+      onDataLoaded(mockData) {
+        ChintPrototypeShell.setMenus((mockData.app && mockData.app.menus) || []);
+      },
+      appOptions(mockData) {
+        const appData = mockData.app || {};
+        return {
+          brandName: appData.brandName,
+          brandIcon: appData.brandIcon,
+          fallbackRoute: appData.fallbackRoute || '#/supplier/reconciliation-list',
+          menuSwitcher: appData.menuSwitcher || null,
+          tenant: appData.tenant || null,
+          user: appData.user || {},
+          messages: appData.messages || []
+        };
+      }
+    }).catch(() => {});
+  </script>
+</body>
+</html>

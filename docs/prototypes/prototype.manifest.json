@@ -1,0 +1,148 @@
+{
+  "manifestVersion": "1.0.0",
+  "generatedAt": "2026-06-15T00:00:00+08:00",
+  "updatedBy": "C.UI-Prototyper",
+  "project": {
+    "brandName": "CHiNT 采购云",
+    "entry": "docs/prototypes/Layout.html#/supplier/reconciliation-list",
+    "fallbackRoute": "#/supplier/reconciliation-list",
+    "routeCount": 6,
+    "moduleCount": 1,
+    "usesECharts": false,
+    "usesTenant": false,
+    "usesMenuSwitcher": false
+  },
+  "modules": [
+    {
+      "name": "采购云 ERP 订单模块改造",
+      "slug": "order-erp",
+      "icon": "ri-shopping-bag-3-line",
+      "entryRoute": "#/supplier/reconciliation-list",
+      "menuKey": "supplierReconciliationList",
+      "routes": [
+        {
+          "path": "#/supplier/reconciliation-list",
+          "name": "入库对账单列表",
+          "menuKey": "supplierReconciliationList",
+          "component": "SupplierReconciliationListPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "status-tabbed-list-page",
+          "archetype": "状态分页签列表页",
+          "breadcrumbs": ["订单履约协同", "对账开票协同", "入库对账单列表"],
+          "tabInfo": "供应商查看入库对账单状态池，待确认不可开票，已确认可进入后续开票流程。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["入库对账单", "发票保存号", "供应商开票流程"],
+          "outboundRoutes": ["#/supplier/reconciliation-detail", "#/supplier/invoice-create"],
+          "keyInteractions": ["状态页签切换", "详情查看", "已确认开票入口"]
+        },
+        {
+          "path": "#/buyer/reconciliation-list",
+          "name": "入库对账单列表",
+          "menuKey": "buyerReconciliationList",
+          "component": "BuyerReconciliationListPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "status-tabbed-list-page",
+          "archetype": "状态分页签列表页",
+          "breadcrumbs": ["新能订单管理", "对账开票管理", "入库对账单列表"],
+          "tabInfo": "采购方查看供应商生成的入库对账单，并在待确认状态进入详情维护附加费用。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["入库对账单", "附加费用", "对账单状态"],
+          "outboundRoutes": ["#/buyer/reconciliation-detail"],
+          "keyInteractions": ["状态页签切换", "详情进入", "待确认处理"]
+        },
+        {
+          "path": "#/buyer/reconciliation-detail",
+          "name": "入库对账单明细详情",
+          "menuKey": "buyerReconciliationList",
+          "component": "BuyerReconciliationDetailPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["新能订单管理", "入库对账单列表", "入库对账单明细详情"],
+          "tabInfo": "采购方在待确认对账单详情中维护附加费用并确认对账单。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["对账单明细", "附加费用", "索赔台账", "贴息台账"],
+          "outboundRoutes": ["#/buyer/reconciliation-list"],
+          "keyInteractions": ["附加费用新增", "附件上传查看", "索赔贴息台账选择", "批量删除", "确认对账单"]
+        },
+        {
+          "path": "#/supplier/reconciliation-detail",
+          "name": "入库对账单明细详情",
+          "menuKey": "supplierReconciliationList",
+          "component": "SupplierReconciliationDetailPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["订单履约协同", "入库对账单列表", "入库对账单明细详情"],
+          "tabInfo": "供应商只读查看对账单明细和采购方固化的附加费用。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["对账单明细", "附加费用"],
+          "outboundRoutes": ["#/supplier/reconciliation-list"],
+          "keyInteractions": ["只读查看", "附件查看"]
+        },
+        {
+          "path": "#/supplier/invoice-create",
+          "name": "待开票列表-新增",
+          "menuKey": "supplierInvoiceCreate",
+          "component": "SupplierInvoiceCreatePage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["订单履约协同", "待开票列表", "新增"],
+          "tabInfo": "供应商仅能选择已确认对账单开票，并在对账单明细信息中核对附加费用。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["待开票单", "入库对账单", "附加费用"],
+          "outboundRoutes": [],
+          "keyInteractions": ["已确认对账单选择", "附加费用只读核对"]
+        },
+        {
+          "path": "#/invoice/check-detail",
+          "name": "发票校验单详情",
+          "menuKey": "invoiceCheckDetail",
+          "component": "InvoiceCheckReadonlyPage",
+          "componentFile": "docs/prototypes/modules/order-erp/reconciliation.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["新能订单管理", "发票校验单列表", "发票校验单详情"],
+          "tabInfo": "发票校验阶段只读展示从对账单带出的附加费用，不再维护。",
+          "guideStepCount": 2,
+          "noteSectionTitles": ["业务调整", "权限边界"],
+          "dataKeys": ["route-local"],
+          "linkedBusinessObjects": ["发票校验单", "对账单明细", "附加费用"],
+          "outboundRoutes": [],
+          "keyInteractions": ["发票信息查看", "对账单附加费用只读展示"]
+        }
+      ]
+    }
+  ],
+  "sharedAssets": {
+    "layoutFile": "docs/prototypes/Layout.html",
+    "dataFile": "docs/prototypes/data.json",
+    "styles": [
+      "docs/prototypes/_shared/Shared.css",
+      "docs/prototypes/_shared/Layout.css",
+      "docs/prototypes/theme/blue.css",
+      "docs/prototypes/theme/light.css",
+      "docs/prototypes/theme/dark.css"
+    ],
+    "runtimeScripts": [
+      "docs/prototypes/_shared/prototype-core.js",
+      "docs/prototypes/_shared/prototype-menu.js",
+      "docs/prototypes/_shared/prototype-data.js",
+      "docs/prototypes/_shared/prototype-route.js",
+      "docs/prototypes/_shared/prototype-components.js",
+      "docs/prototypes/_shared/prototype-shell.js",
+      "docs/prototypes/modules/order-erp/reconciliation.js"
+    ]
+  }
+}
