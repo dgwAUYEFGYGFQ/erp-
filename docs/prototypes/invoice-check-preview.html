@@ -56,6 +56,11 @@
     .footer-line { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; color: var(--muted); }
     .ledger-dialog .el-dialog { min-width: 1200px; }
     .ledger-dialog .el-dialog__body { padding-top: 12px; }
+    .upstream-dialog .el-dialog { min-width: 980px; }
+    .upstream-dialog .el-dialog__body { max-height: 68vh; overflow: auto; padding-top: 12px; }
+    .dialog-section + .dialog-section { margin-top: 18px; }
+    .dialog-section-title { margin-bottom: 10px; padding-left: 8px; border-left: 3px solid #2d7df0; font-size: 14px; font-weight: 700; }
+    .dialog-section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .ledger-query { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .ledger-table-scroll { width: 100%; overflow-x: auto; }
     .ledger-table-scroll .el-table { min-width: 2200px; }
@@ -218,7 +223,7 @@
                 <el-table-column prop="invoicePriceAmount" label="开票价金额" width="150" align="right"></el-table-column>
                 <el-table-column prop="postedPriceAmount" label="记账价金额" width="150" align="right"></el-table-column>
                 <el-table-column prop="createdAt" label="生成时间" width="170"></el-table-column>
-                <el-table-column label="操作" width="150" fixed="right" align="center"><template #default><el-button link type="primary" size="small">查看上游单据</el-button><el-button link type="primary" size="small">删除</el-button></template></el-table-column>
+                <el-table-column label="操作" width="150" fixed="right" align="center"><template #default><el-button link type="primary" size="small" @click="openUpstreamDocument">查看上游单据</el-button><el-button link type="primary" size="small">删除</el-button></template></el-table-column>
               </el-table>
             </div>
             <div class="table-block">
@@ -300,6 +305,56 @@
             <div class="footer-line"><span>共 {{ adjustments.length }} 条，已选 {{ selectedAdjustments.length }} 条</span></div>
           </div>
         </section>
+
+        <el-dialog v-model="upstreamVisible" title="查看上游单据" width="1100px" append-to-body class="upstream-dialog">
+          <section class="dialog-section">
+            <div class="dialog-section-title">入库单收货记录信息</div>
+            <div class="ledger-table-scroll">
+              <el-table :data="upstreamReceiptRows" size="small" stripe border table-layout="auto" style="width:100%">
+                <el-table-column prop="lineNo" label="序号" width="60"></el-table-column>
+                <el-table-column prop="inboundNo" label="入库单号" min-width="170"></el-table-column>
+                <el-table-column prop="erpPoNo" label="ERP采购单号" min-width="150"></el-table-column>
+                <el-table-column prop="erpPoLineNo" label="ERP采购单行号" width="140"></el-table-column>
+                <el-table-column prop="purchaseType" label="采购类型" width="100"></el-table-column>
+                <el-table-column prop="materialNo" label="物料编号" min-width="170"></el-table-column>
+                <el-table-column prop="materialDescription" label="物料描述" min-width="220"></el-table-column>
+                <el-table-column prop="receiptQuantity" label="收货数量" width="110" align="right"></el-table-column>
+                <el-table-column prop="unit" label="单位" width="90"></el-table-column>
+                <el-table-column prop="taxExcludedPrice" label="不含税单价" width="120" align="right"></el-table-column>
+                <el-table-column prop="taxExcludedAmount" label="不含税金额" width="130" align="right"></el-table-column>
+                <el-table-column prop="taxIncludedAmount" label="含税金额" width="130" align="right"></el-table-column>
+                <el-table-column prop="receiptDate" label="收货日期" width="120"></el-table-column>
+              </el-table>
+            </div>
+          </section>
+          <section class="dialog-section">
+            <div class="dialog-section-head">
+              <div class="dialog-section-title">入库单附加费用信息</div>
+              <el-tag size="small" type="info">调整合计：{{ money(upstreamFeeTotal) }}</el-tag>
+            </div>
+            <div class="ledger-table-scroll">
+              <el-table :data="upstreamFeeRows" size="small" stripe border table-layout="auto" style="width:100%">
+                <el-table-column prop="inboundNo" label="入库单号" min-width="170"></el-table-column>
+                <el-table-column prop="adjustmentType" label="调整类型" min-width="160"></el-table-column>
+                <el-table-column prop="serialNo" label="流水号" min-width="180"></el-table-column>
+                <el-table-column prop="historyInterestAmount" label="历史贴息金额" width="130" align="right"></el-table-column>
+                <el-table-column prop="taxIncludedAmount" label="调整金额（含税）" width="150" align="right"></el-table-column>
+                <el-table-column prop="taxRate" label="税率" width="90" align="right"></el-table-column>
+                <el-table-column prop="taxExcludedAmount" label="不含税金额" width="130" align="right"></el-table-column>
+                <el-table-column prop="remark" label="备注" min-width="220"></el-table-column>
+                <el-table-column label="附件" min-width="150">
+                  <template #default="scope">
+                    <el-button v-if="scope.row.attachment && scope.row.attachment !== '-'" link type="primary" size="small" @click="viewUpstreamAttachment(scope.row.attachment)">{{ scope.row.attachment }}</el-button>
+                    <span v-else>-</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </section>
+          <template #footer>
+            <el-button type="primary" @click="closeUpstreamDocument">关闭</el-button>
+          </template>
+        </el-dialog>
 
         <el-dialog v-model="ledgerVisible" :title="ledgerDialogTitle" width="1240px" class="ledger-dialog" append-to-body @close="cancelLedger">
           <div class="ledger-query">
@@ -422,6 +477,18 @@
           ],
           selectedAdjustments: [],
           activeRow: null,
+          upstreamVisible: false,
+          upstreamReceiptRows: [
+            { lineNo: 1, inboundNo: 'RK009202606120001', erpPoNo: '4500142570', erpPoLineNo: '00010', purchaseType: '101', materialNo: '00000001070000247', materialDescription: '工字轮圆形互联条0.24mm', receiptQuantity: 20, unit: '千克', taxExcludedPrice: 181.82, taxExcludedAmount: 3636.30, taxIncludedAmount: 4109.02, receiptDate: '2026-06-12' },
+            { lineNo: 2, inboundNo: 'RK009202606120002', erpPoNo: '4500142570', erpPoLineNo: '00010', purchaseType: '101', materialNo: '00000001070000207', materialDescription: '工字轮汇流条4*0.3mm', receiptQuantity: 20, unit: '千克', taxExcludedPrice: 79.93, taxExcludedAmount: 1598.60, taxIncludedAmount: 1806.42, receiptDate: '2026-06-12' },
+            { lineNo: 3, inboundNo: 'RK009202606120003', erpPoNo: '4900014482', erpPoLineNo: '00020', purchaseType: '101', materialNo: '00000001070000208', materialDescription: '互联条包装材料批次', receiptQuantity: 18, unit: '箱', taxExcludedPrice: 88.81, taxExcludedAmount: 1598.60, taxIncludedAmount: 1806.42, receiptDate: '2026-06-12' }
+          ],
+          upstreamFeeRows: [
+            { inboundNo: 'RK009202606120001', adjustmentType: '索赔', serialNo: 'OA-SP-20260613-001', historyInterestAmount: '-', taxIncludedAmount: 12800.00, taxRate: '13%', taxExcludedAmount: 11327.43, remark: '包装破损索赔，随本次对账确认', attachment: '索赔附件.pdf' },
+            { inboundNo: 'RK009202606120001', adjustmentType: '应收抵扣-认证费', serialNo: '', historyInterestAmount: '-', taxIncludedAmount: 123.00, taxRate: '13%', taxExcludedAmount: 108.85, remark: '认证费用抵扣', attachment: '认证说明.pdf' },
+            { inboundNo: 'RK009202606120002', adjustmentType: '贴息', serialNo: 'OA-HTPS-20260612-016', historyInterestAmount: 12.00, taxIncludedAmount: 36.30, taxRate: '13%', taxExcludedAmount: 32.12, remark: '合同贴息台账带出', attachment: '贴息明细.pdf' },
+            { inboundNo: 'RK009202606120002', adjustmentType: '折让（负数发票）', serialNo: '', historyInterestAmount: '-', taxIncludedAmount: -200.00, taxRate: '13%', taxExcludedAmount: -176.99, remark: '质量折让负数发票', attachment: '-' }
+          ],
           ledgerVisible: false,
           ledgerType: '索赔',
           ledgerKeyword: '',
@@ -441,6 +508,9 @@
       computed: {
         adjustmentTotal() {
           return this.adjustments.reduce((sum, item) => sum + Number(item.taxIncludedAmount || 0), 0);
+        },
+        upstreamFeeTotal() {
+          return this.upstreamFeeRows.reduce((sum, item) => sum + Number(item.taxIncludedAmount || 0), 0);
         },
         ledgerDialogTitle() {
           return this.ledgerType === '贴息' ? '选择贴息台账' : '选择索赔台账';
@@ -462,6 +532,16 @@
         },
         toast(message) {
           ElementPlus.ElMessage.success(message);
+        },
+        openUpstreamDocument() {
+          console.log('查看上游单据 clicked');
+          this.upstreamVisible = true;
+        },
+        closeUpstreamDocument() {
+          this.upstreamVisible = false;
+        },
+        viewUpstreamAttachment(fileName) {
+          alert('查看附件：' + fileName);
         },
         addAdjustment() {
           this.adjustments.push({ id: 'ADJ-' + String(this.adjustments.length + 1).padStart(3, '0'), adjustmentType: '', serialNo: '', taxIncludedAmount: 0, remark: '', attachment: '' });

@@ -912,11 +912,20 @@
     data() {
       return { upstreamVisible: false };
     },
-    methods: { amount, displayTaxRate, taxExcludedAmount, displayOptionalAmount },
+    methods: {
+      amount,
+      displayTaxRate,
+      taxExcludedAmount,
+      displayOptionalAmount,
+      openUpstreamInline() {
+        console.log('点击查看上游单据');
+        openUpstreamDocumentModal();
+      }
+    },
     template: `
       <div class="detail-card"><div class="small-title"><span><i class="ri-arrow-left-circle-line" style="color:#409eff"></i> 供方已开票列表-校验</span><span><el-button>保存</el-button><el-button>同步</el-button></span></div>
         <div class="section-title">基本信息</div><div class="field-grid"><div class="read-field"><label>检验单号：</label><span class="read-box">JY202606120002</span></div><div class="read-field"><label>供应商编号：</label><span class="read-box">0010001404</span></div><div class="read-field"><label>供应商名称：</label><span class="read-box">杭州萧山江海实业有限公司</span></div><div class="read-field"><label>发票号：</label><span class="read-box">26332000004949665201</span></div><div class="read-field"><label>不含税总额：</label><span class="read-box">3636.3000</span></div><div class="read-field"><label>开票价总额：</label><span class="read-box">{{ amount(statementTaxIncluded) }}</span></div></div>
-        <div class="section-title">供方已开票信息</div><div style="padding:0 28px 32px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>发票保存号</th><th>单据类型</th><th>单据编号</th><th>状态</th><th>开票价金额</th><th>记账价金额</th><th>操作</th></tr></thead><tbody><tr><td>FP009202606120002</td><td>入库单</td><td>RK009202606120001</td><td>已确认</td><td>3636.3</td><td>3636.3</td><td><a href="javascript:void(0)" class="link-btn" data-action="view-upstream-document">查看上游单据</a></td></tr></tbody></table></div></div>
+        <div class="section-title">供方已开票信息</div><div style="padding:0 28px 32px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>发票保存号</th><th>单据类型</th><th>单据编号</th><th>状态</th><th>开票价金额</th><th>记账价金额</th><th>操作</th></tr></thead><tbody><tr><td>FP009202606120002</td><td>入库单</td><td>RK009202606120001</td><td>已确认</td><td>3636.3</td><td>3636.3</td><td><a href="javascript:void(0)" class="link-btn" data-action="view-upstream-document" @click.prevent.stop="openUpstreamInline">查看上游单据</a></td></tr></tbody></table></div></div>
         <div id="upstreamDocumentMask" class="upstream-modal-mask"></div>
         <div id="upstreamDocumentModal" class="upstream-modal" role="dialog" aria-modal="true" aria-labelledby="upstreamDocumentTitle">
           <div class="upstream-modal-header"><span id="upstreamDocumentTitle">查看上游单据</span><button class="upstream-modal-close" type="button" data-action="close-upstream-document">×</button></div>
