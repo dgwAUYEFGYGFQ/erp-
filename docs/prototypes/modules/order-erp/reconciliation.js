@@ -508,6 +508,9 @@
         this.s.detailStatus = row.status;
         this.openPage(this.s.activeView === 'buyer' ? 'buyerDetail' : 'supplierDetail');
       },
+      showPaidPrintTip() {
+        ElementPlus.ElMessage.info('原型演示：点击后将根据当前供方已开票详情生成对账单Excel');
+      },
       releaseInboundRecords(row) {
         (row.inboundIds || [row.id]).forEach((id) => {
           if (!this.s.releasedInboundIds.includes(id)) this.s.releasedInboundIds.push(id);
@@ -739,7 +742,7 @@
               </div>
               <buyer-list-view v-if="s.activePage==='buyerList'" :tabs="tabs" :rows="listRows" :active-status="s.activeStatus" @status="setStatus" @detail="openDetail"></buyer-list-view>
               <buyer-detail-view v-else-if="s.activePage==='buyerDetail'" :status="s.detailStatus" :fees="currentFees" :editable="editable" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :adjustment-types="adjustmentTypes" :inbound-rows="s.inboundRows" @add="addFee" @batch-delete="batchDeleteFee" @delete-row="deleteFee" @type-change="typeChange" @tax-change="syncTaxExcluded" @ledger-open="openLedger" @file-click="triggerFile" @file-change="fileChange" @view-file="viewFile" @confirm="confirmStatement" @void="buyerVoidStatement"></buyer-detail-view>
-              <paid-detail-view v-else-if="s.activePage==='buyerPaid'" :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile"></paid-detail-view>
+              <paid-detail-view v-else-if="s.activePage==='buyerPaid'" :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile" @print="showPaidPrintTip"></paid-detail-view>
               <invoice-check-view v-else :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile"></invoice-check-view>
             </main>
           </div>
@@ -893,11 +896,11 @@
 
   const PaidDetailView = {
     props: ['fees', 'feeTotal', 'statementTaxIncluded', 'inboundRows'],
-    emits: ['file'],
+    emits: ['file', 'print'],
     components: { ReadonlyFeeTable },
     methods: { amount, displayTaxRate, taxExcludedAmount, displayOptionalAmount },
     template: `
-      <div class="detail-card"><div class="small-title"><span><i class="ri-arrow-left-circle-line" style="color:#409eff"></i> 供方已开票列表详情</span></div>
+      <div class="detail-card"><div class="small-title"><span><i class="ri-arrow-left-circle-line" style="color:#409eff"></i> 供方已开票详情</span><el-button type="primary" @click="$emit('print')">打印</el-button></div>
         <div class="section-title">基本信息</div><div class="field-grid"><div class="read-field"><label>发票保存号：</label><span class="read-box">FP009202606120002</span></div><div class="read-field"><label>发票类型：</label><span class="read-box">纸质发票</span></div><div class="read-field"><label>发票日期：</label><span class="read-box">2026-06-12</span></div><div class="read-field"><label>不含税金额：</label><span class="read-box">3636.3</span></div><div class="read-field"><label>对账单含税金额：</label><span class="read-box">{{ amount(statementTaxIncluded) }}</span></div></div>
         <div class="section-title">发票信息</div><div style="padding:0 28px 20px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>序号</th><th>发票号</th><th>不含税金额</th><th>税率%</th><th>税额</th><th>含税金额</th><th>开票时间</th><th>开票代码</th><th>发票附件</th></tr></thead><tbody><tr><td>1</td><td>26332000004949665201</td><td>3636.3</td><td>0</td><td>0</td><td>3636.3</td><td>2026-06-11</td><td>26332000004949665201</td><td><span class="file-link" @click="$emit('file','22BB23CBFC7F4EDB.pdf')">22BB23CBFC7F4EDB.pdf</span></td></tr><tr><td>合计</td><td></td><td>3636.3000</td><td></td><td>0.0000</td><td>3636.3000</td><td></td><td></td><td></td></tr></tbody></table></div></div>
         <div class="section-title">对账单信息</div><div style="padding:0 28px 20px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>序号</th><th>单据类型</th><th>单据编号</th><th>不含税金额</th><th>含税金额</th><th>单据时间</th></tr></thead><tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.type }}</td><td>{{ row.id }}</td><td>{{ row.amount }}</td><td>{{ row.taxIncluded }}</td><td>{{ row.time }}</td></tr></tbody></table></div></div>
