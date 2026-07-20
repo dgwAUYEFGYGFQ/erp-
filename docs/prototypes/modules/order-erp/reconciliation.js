@@ -1,8 +1,10 @@
 (function (window) {
   const componentName = 'OrderScreenshotReplicaPage';
   const routes = {
+    supplierGenerate: '#/supplier/reconciliation-generate',
     supplierList: '#/supplier/reconciliation-list',
     supplierInvoice: '#/supplier/invoice-create',
+    buyerErpCheck: '#/buyer/erp-inbound-check',
     buyerList: '#/buyer/reconciliation-list',
     buyerDetail: '#/buyer/reconciliation-detail',
     buyerPaid: '#/buyer/paid-invoice-detail',
@@ -29,6 +31,7 @@
       ],
       buyer: [
         { page: 'account', label: '我的账号', closable: false },
+        { page: 'buyerErpCheck', label: 'ERP入库记录核对', closable: true },
         { page: 'buyerList', label: '入库对账单列表', closable: true },
         { page: 'buyerDetailListTab', label: '入库对账单明细列表', closable: true, placeholder: true },
         { page: 'buyerDetail', label: '入库对账单明细详情', closable: true },
@@ -37,9 +40,9 @@
       ]
     },
     inboundRows: [
-      { id: 'RK009202606120001', type: '入库单', receiptDate: '2026-06-12', materialNo: '000000001070000247', materialDesc: '工字轮圆形互联条0.24mm', qty: 20, unit: '千克', price: 79.93, amount: 3636.3, taxIncluded: 4109.02, factory: 'HN01', location: 'JZ01', erpPo: '4500142570', erpLine: '00010', time: '2026-06-12 13:36:24' },
-      { id: 'RK009202606120002', type: '入库单', receiptDate: '2026-06-12', materialNo: '000000001070000207', materialDesc: '工字轮汇流条 4*0.3mm', qty: 20, unit: '千克', price: 79.93, amount: 1598.6, taxIncluded: 1806.42, factory: 'HN01', location: 'JZ01', erpPo: '4900014482', erpLine: '00010', time: '2026-06-12 16:51:08' },
-      { id: 'RK009202606120003', type: '入库单', receiptDate: '2026-06-12', materialNo: '000000001070000208', materialDesc: '互联条包装材料批次', qty: 18, unit: '箱', price: 88.81, amount: 1598.6, taxIncluded: 1806.42, factory: 'HN01', location: 'JZ01', erpPo: '4900014483', erpLine: '00020', time: '2026-06-12 17:21:59' }
+      { id: 'RK009202606120001', type: '入库单', receiptDate: '2026-06-12', materialNo: '000000001070000247', materialDesc: '工字轮圆形互联条0.24mm', qty: 20, unit: '千克', price: 79.93, amount: 3636.3, taxIncluded: 4109.02, factory: 'HN01', location: 'JZ01', erpPo: '4500142570', erpLine: '00010', time: '2026-06-12 13:36:24', costCenter: 'CC1001', costCenterDesc: '生产运营成本中心', internalOrder: 'IO202606001', internalOrderDesc: '设备维修项目', fixedAssetNo: 'FA202606001', fixedAssetDesc: '自动化检测设备', salesOrderNo: 'SO202606001', salesOrderLine: '00010', customerName: '正泰新能客户示例', acceptanceAttachment: '验收单附件.pdf' },
+      { id: 'RK009202606120002', type: '入库单', receiptDate: '2026-06-12', materialNo: '000000001070000207', materialDesc: '工字轮汇流条 4*0.3mm', qty: 20, unit: '千克', price: 79.93, amount: 1598.6, taxIncluded: 1806.42, factory: 'HN01', location: 'JZ01', erpPo: '4900014482', erpLine: '00010', time: '2026-06-12 16:51:08', costCenter: 'CC1002', costCenterDesc: '质量检验成本中心', internalOrder: 'IO202606002', internalOrderDesc: '验收检测项目', fixedAssetNo: '', fixedAssetDesc: '', salesOrderNo: 'SO202606002', salesOrderLine: '00020', customerName: '正泰新能客户示例', acceptanceAttachment: '验收记录.pdf' },
+      { id: 'RK009202606120003', type: '入库单', receiptDate: '2026-06-12', materialNo: '000000001070000208', materialDesc: '互联条包装材料批次', qty: 18, unit: '箱', price: 88.81, amount: 1598.6, taxIncluded: 1806.42, factory: 'HN01', location: 'JZ01', erpPo: '4900014483', erpLine: '00020', time: '2026-06-12 17:21:59', costCenter: '', costCenterDesc: '', internalOrder: '', internalOrderDesc: '', fixedAssetNo: 'FA202606003', fixedAssetDesc: '包装检测工装', salesOrderNo: '', salesOrderLine: '', customerName: '', acceptanceAttachment: '' }
     ],
     statements: [
       { id: 'RK009202606120003', status: '已生成', factoryCode: 'HN01', factoryName: '海宁新能源工厂', supplierCode: '0010001404', supplierName: '杭州萧山江海实业有限公司', amount: '', time: '2026-06-12 17:21:59', invoiceSaveNo: '', inboundIds: ['RK009202606120003'], released: false, voidReason: '' },
@@ -74,14 +77,10 @@
     const style = document.createElement('style');
     style.id = 'order-shot-style';
     style.textContent = `
-      .shot-root{position:fixed;inset:0;z-index:5000;background:#e8f1ff;color:#1f2d3d;font-family:"Microsoft YaHei",Arial,sans-serif;font-size:12px;overflow:hidden}
+      .shot-root{position:relative;min-height:100%;background:#e8f1ff;color:#1f2d3d;font-family:"Microsoft YaHei",Arial,sans-serif;font-size:12px;overflow:visible}
       .view-switch{position:absolute;right:18px;top:7px;z-index:20;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);border:1px solid #cfd9e8;border-radius:4px;padding:3px 6px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
       .view-switch span{color:#60708a}.view-switch .el-radio-button__inner{padding:5px 10px;font-size:12px}
-      .supplier-top{height:40px;background:#265be8;color:#fff;display:flex;align-items:center}.supplier-logo{width:168px;font-size:22px;font-weight:700;padding-left:16px}.supplier-logo b{font-size:15px;margin-left:6px;font-weight:500}.supplier-nav{display:flex;height:100%;align-items:center}.supplier-nav span{height:100%;padding:0 22px;display:flex;align-items:center}.supplier-nav .active{background:#1647c8}.supplier-user{margin-left:auto;margin-right:230px}
-      .supplier-shell{display:grid;grid-template-columns:166px 1fr;height:calc(100vh - 40px)}.supplier-side{background:#edf4ff;color:#303943;border-right:1px solid #dce7f5;padding-top:8px;overflow:auto}.supplier-side .group{height:40px;display:flex;align-items:center;padding:0 16px;gap:8px}.supplier-side .child{height:38px;display:flex;align-items:center;padding-left:30px}.supplier-side .active{background:#2c6eea;color:#fff;border-radius:2px;margin:0 6px;padding-left:24px}
-      .supplier-main{padding:0 12px 24px;overflow:auto}.shot-tabbar{height:30px;display:flex;align-items:end;gap:4px}.shot-tab{height:24px;background:#fff;border:1px solid #ccd7e6;padding:0 10px;display:flex;align-items:center;cursor:pointer}.shot-tab.active{background:#2d7df0;color:#fff;border-color:#2d7df0}.tab-close{margin-left:6px;opacity:.8;font-weight:700}.tab-close:hover{opacity:1}
-      .buyer-top{height:56px;background:#fff;border-bottom:1px solid #d9dfe8;display:flex;align-items:center}.buyer-logo{width:240px;height:56px;background:#2c83df;color:#fff;font-size:34px;font-weight:700;display:flex;align-items:center;padding-left:20px}.buyer-nav{display:flex;height:100%;align-items:center}.buyer-nav span{height:100%;padding:0 24px;display:flex;align-items:center;font-size:16px}.buyer-nav .active{color:#1f7af0}.buyer-user{margin-left:auto;margin-right:40px;font-size:15px}
-      .buyer-shell{display:grid;grid-template-columns:240px 1fr;height:calc(100vh - 56px);background:#f7f7f7}.buyer-side{background:#061a50;color:#fff;padding-top:14px;overflow:auto}.buyer-side .group{height:56px;display:flex;align-items:center;padding:0 28px;gap:12px;font-size:16px}.buyer-side .child{height:58px;display:flex;align-items:center;padding-left:46px;font-size:16px}.buyer-side .active{color:#43a0ff}.buyer-main{overflow:auto;padding:0 18px 40px}
+      .supplier-main{padding:0 12px 24px;overflow:visible}.buyer-main{overflow:visible;padding:0 18px 40px}
       .card{background:#fff;border-radius:4px;margin:12px 0;border:1px solid #edf2f8}.search-card{padding:16px 20px}.search-grid{display:grid;grid-template-columns:1.2fr 1.2fr 1fr;gap:14px 28px}.search-actions{grid-column:1/-1;text-align:right}.status-card{padding:18px}.tabs{height:38px;display:flex;gap:36px;border-bottom:1px solid #d7dfeb;margin-bottom:12px}.tabs span{height:38px;font-weight:600;cursor:pointer}.tabs .active{color:#1f78ff;border-bottom:2px solid #1f78ff}
       .shot-table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed}.shot-table th{height:38px;background:#f0f3f8;border:1px solid #d9e1ec;color:#263445;font-weight:500;white-space:nowrap}.shot-table td{height:38px;border:1px solid #e0e7f0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.shot-table .link{color:#1677ff;cursor:pointer}.table-scroll{overflow:auto;border:1px solid #d9e1ec}.table-scroll .shot-table{min-width:1500px}.footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#606266}.small-title{height:54px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #d9e1ec;padding:0 18px;font-size:16px;font-weight:700}
       .detail-card{background:#fff;margin:18px;border:1px solid #edf2f8}.section-title{height:50px;display:flex;align-items:center;padding:0 28px;font-size:18px;font-weight:700}.section-title:before{content:"";width:4px;height:22px;background:#2d7df0;margin-right:8px}.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 34px;padding:10px 28px 28px}.read-field{display:flex;align-items:center}.read-field label{width:120px;text-align:right;margin-right:12px;color:#333}.read-field span,.read-field .el-input{flex:1}.read-box{height:38px;line-height:38px;background:#f3f6fa;border:1px solid #dce3ee;border-radius:4px;padding:0 12px;color:#a0a7b2}
@@ -362,8 +361,10 @@
 
   function setHash(page) {
     const map = {
+      supplierGenerate: routes.supplierGenerate,
       supplierList: routes.supplierList,
       supplierInvoice: routes.supplierInvoice,
+      buyerErpCheck: routes.buyerErpCheck,
       buyerList: routes.buyerList,
       buyerDetail: routes.buyerDetail,
       buyerPaid: routes.buyerPaid,
@@ -378,7 +379,11 @@
     name: componentName,
     data() {
       const hash = window.location.hash;
-      if (hash.includes('buyer')) {
+      if (hash.includes('buyer/erp-inbound-check')) {
+        state.activeView = 'buyer';
+        state.activePage = 'buyerErpCheck';
+        state.activeStatus = '待确认';
+      } else if (hash.includes('buyer')) {
         state.activeView = 'buyer';
         state.activePage = hash.includes('paid-invoice') ? 'buyerPaid' : (hash.includes('detail') ? 'buyerDetail' : 'buyerList');
         state.activeStatus = '待确认';
@@ -482,6 +487,9 @@
         this.ensureTab(page);
         setHash(page);
       },
+      jumpRoute(path) {
+        window.location.hash = path;
+      },
       tabLabel(page) {
         return {
           supplierList: '入库对账单列表',
@@ -489,6 +497,7 @@
           supplierPaid: '已开票列表详情',
           supplierDetail: '入库对账单明细查询详情',
           buyerList: '入库对账单列表',
+          buyerErpCheck: 'ERP入库记录核对',
           buyerDetail: '入库对账单明细详情',
           buyerPaid: '供方已开票详情',
           invoiceCheck: '发票校验单详情'
@@ -696,77 +705,22 @@
         </div>
 
         <template v-if="s.activeView === 'supplier'">
-          <div class="supplier-top">
-            <div class="supplier-logo">CHiNT<b>采购云</b></div>
-            <i class="ri-menu-fold-line" style="font-size:18px;margin-right:20px"></i>
-            <div class="supplier-nav"><span>首页</span><span>个人中心</span><span>订单管理</span><span>供应商管理</span><span>采购寻源协同</span><span>订单履约协同</span><span class="active">日常业务协同</span><span>客服中心</span></div>
-            <div class="supplier-user"><i class="ri-user-3-fill"></i> 正泰供应商</div>
-          </div>
-          <div class="supplier-shell">
-            <aside class="supplier-side">
-              <div class="group"><i class="ri-truck-line"></i>采购订单协同<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-printer-line"></i>标签打印协同<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-inbox-archive-line"></i>收发货协同<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-shield-check-line"></i>质量协同<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-bill-line"></i>对账开票协同<i class="ri-arrow-up-s-line" style="margin-left:auto"></i></div>
-              <div class="child">入库对账单生成</div>
-              <div class="child" :class="{active:s.activePage==='supplierList'}" @click="openPage('supplierList')">入库对账单列表</div>
-              <div class="child">入库对账单明细列表</div>
-              <div class="child" :class="{active:s.activePage==='supplierInvoice'}" @click="openPage('supplierInvoice')">待开票列表</div>
-              <div class="child" :class="{active:s.activePage==='supplierPaid'}" @click="openPage('supplierPaid')">已开票列表</div>
-              <div class="child">应收账款列表</div>
-              <div class="child">财务共享付款单列表</div>
-              <div class="child">货款提前结算列表</div>
-              <div class="child">货款提前结算新增</div>
-              <div class="child">货款提前结算详情</div>
-              <div class="group"><i class="ri-database-2-line"></i>基础信息管理<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-folder-3-line"></i>计划协同<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-            </aside>
-            <main class="supplier-main">
-              <div class="shot-tabbar">
-                <div v-for="(tab,index) in activeOpenTabs" :key="tab.page" class="shot-tab" :class="{active:s.activePage===tab.page}" @click="openTab(tab)">
-                  {{ tab.label }}<span v-if="tab.closable" class="tab-close" @click.stop="closeTab(tab,index)">×</span>
-                </div>
-              </div>
+          <main class="supplier-main">
               <supplier-list-view v-if="s.activePage==='supplierList'" :tabs="tabs" :rows="listRows" :active-status="s.activeStatus" @status="setStatus" @detail="openDetail" @invoice="goInvoice" @submit="submitStatement" @void="supplierVoid"></supplier-list-view>
               <invoice-create-view v-else-if="s.activePage==='supplierInvoice'" :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile"></invoice-create-view>
               <paid-detail-view v-else-if="s.activePage==='supplierPaid'" :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile"></paid-detail-view>
               <reconciliation-readonly-view v-else :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" :statement="currentStatement" @file="viewFile" @submit="supplierSubmitCurrent" @void="supplierVoidCurrent"></reconciliation-readonly-view>
-            </main>
-          </div>
+          </main>
         </template>
 
         <template v-else>
-          <div class="buyer-top">
-            <div class="buyer-logo">CHiNT</div><i class="ri-menu-fold-line" style="font-size:22px;margin:0 22px"></i>
-            <div class="buyer-nav"><span>个人中心</span><span>成本管理测试</span><span class="active">新能订单管理</span></div>
-            <div class="buyer-user"><i class="ri-user-3-fill"></i> 李思锦 <i class="ri-arrow-down-s-line"></i></div>
-          </div>
-          <div class="buyer-shell">
-            <aside class="buyer-side">
-              <div class="group"><i class="ri-file-list-3-line"></i>采购订单管理<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-database-2-line"></i>基础信息管理<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-printer-line"></i>标签打印管理<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-shield-check-line"></i>质量管理<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-              <div class="group"><i class="ri-bill-line"></i>对账开票管理<i class="ri-arrow-up-s-line" style="margin-left:auto"></i></div>
-              <div class="child">ERP入库记录核对</div><div class="child">入库开票勾兑</div>
-              <div class="child" :class="{active:s.activePage==='buyerList'}" @click="openPage('buyerList')">入库对账单列表</div>
-              <div class="child" :class="{active:s.activePage==='buyerDetail'}" @click="openPage('buyerDetail')">入库对账单明细列表</div>
-              <div class="child" :class="{active:s.activePage==='buyerPaid'}" @click="openPage('buyerPaid')">供方已开票列表</div><div class="child">对账单合并列表</div><div class="child" :class="{active:s.activePage==='invoiceCheck'}" @click="openPage('invoiceCheck')">发票校验单列表</div><div class="child">电子发票档案列表</div><div class="child">供方应收帐款列表</div>
-              <div class="group"><i class="ri-calendar-check-line"></i>计划管理<i class="ri-arrow-down-s-line" style="margin-left:auto"></i></div>
-            </aside>
-            <main class="buyer-main">
-              <div class="shot-tabbar">
-                <div v-for="(tab,index) in activeOpenTabs" :key="tab.page" class="shot-tab" :class="{active:s.activePage===tab.page}" @click="openTab(tab)">
-                  {{ tab.label }}<span v-if="tab.closable" class="tab-close" @click.stop="closeTab(tab,index)">×</span>
-                </div>
-              </div>
-              <buyer-list-view v-if="s.activePage==='buyerList'" :tabs="tabs" :rows="listRows" :active-status="s.activeStatus" @status="setStatus" @detail="openDetail"></buyer-list-view>
+          <main class="buyer-main">
+              <erp-inbound-check-view v-if="s.activePage==='buyerErpCheck'" :inbound-rows="s.inboundRows" @file="viewFile"></erp-inbound-check-view>
+              <buyer-list-view v-else-if="s.activePage==='buyerList'" :tabs="tabs" :rows="listRows" :active-status="s.activeStatus" @status="setStatus" @detail="openDetail"></buyer-list-view>
               <buyer-detail-view v-else-if="s.activePage==='buyerDetail'" :status="s.detailStatus" :fees="currentFees" :editable="editable" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :adjustment-types="adjustmentTypes" :inbound-rows="s.inboundRows" @add="addFee" @batch-delete="batchDeleteFee" @delete-row="deleteFee" @type-change="typeChange" @tax-change="syncTaxExcluded" @ledger-open="openLedger" @file-click="triggerFile" @file-change="fileChange" @view-file="viewFile" @confirm="confirmStatement" @void="buyerVoidStatement"></buyer-detail-view>
               <paid-detail-view v-else-if="s.activePage==='buyerPaid'" :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile" @print="showPaidPrintTip"></paid-detail-view>
               <invoice-check-view v-else :fees="currentFees" :fee-total="feeTotal" :statement-tax-included="statementTaxIncluded" :inbound-rows="s.inboundRows" @file="viewFile"></invoice-check-view>
-            </main>
-          </div>
+          </main>
         </template>
 
         <el-dialog v-model="ledgerVisible" :title="ledgerType === '索赔' ? '选择索赔台账' : '选择贴息台账'" width="1220px" append-to-body class="ledger-dialog">
@@ -833,6 +787,32 @@
       </div>`
   };
 
+  const ErpInboundCheckView = {
+    props: ['inboundRows'],
+    emits: ['file'],
+    methods: { amount },
+    template: `
+      <div>
+        <div class="card search-card"><div class="search-grid">
+          <el-form-item label="供应商编号"><el-input placeholder="请选择供应商编号"><template #suffix><i class="ri-search-line"></i></template></el-input></el-form-item>
+          <el-form-item label="核对日期"><el-date-picker type="daterange" start-placeholder="开始时间" end-placeholder="结束时间" style="width:100%"></el-date-picker></el-form-item>
+          <el-form-item label="ERP采购单号"><el-input placeholder="请输入采购单号"></el-input></el-form-item>
+          <el-form-item label="物料编码"><el-input placeholder="请输入物料编码"></el-input></el-form-item>
+          <el-form-item label="核对单号"><el-input placeholder="请输入核对单号"></el-input></el-form-item>
+          <el-form-item label="采购合同号"><el-input placeholder="请输入采购合同号"></el-input></el-form-item>
+          <el-form-item label="入库批号"><el-input placeholder="请输入入库批号"></el-input></el-form-item>
+          <el-form-item label="工厂/库位"><el-input placeholder="请选择工厂/库位"><template #suffix><i class="ri-search-line"></i></template></el-input></el-form-item>
+          <el-form-item label="工厂"><el-input placeholder="请选择工厂"><template #suffix><i class="ri-search-line"></i></template></el-input></el-form-item>
+          <div class="search-actions"><el-button>重置</el-button><el-button type="primary">查询</el-button><el-button link type="primary">收起<i class="ri-arrow-up-s-line"></i></el-button></div>
+        </div></div>
+        <div class="card status-card"><div class="tabs"><span>未核对</span><span class="active">已核对</span><span>ERP已开票</span><span>全部</span></div>
+          <div class="table-scroll"><table class="shot-table" style="min-width:2600px"><thead><tr><th>序号</th><th>收货日期</th><th>创建日期</th><th>核对日期</th><th>核对单号</th><th>核对人</th><th>物料编码</th><th>物料描述</th><th>仓库收货数量</th><th>单位</th><th>不含税单价</th><th>不含税金额</th><th>币种</th><th>移动类型</th><th>成本中心</th><th>成本中心描述</th><th>内部订单</th><th>内部订单描述</th><th>固定资产号</th><th>固定资产描述</th><th>销售订单号</th><th>销售订单行号</th><th>客户名称</th><th>验收附件</th></tr></thead>
+          <tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.receiptDate }}</td><td>2026-06-12</td><td>2026-06-12 14:58:34</td><td>CK0092026061200{{ index + 28 }}</td><td>缪雨</td><td>{{ row.materialNo }}</td><td>{{ row.materialDesc }}</td><td>{{ row.qty }}</td><td>{{ row.unit }}</td><td>{{ row.price }}</td><td>{{ amount(row.amount) }}</td><td>CNY</td><td>101</td><td>{{ row.costCenter || '-' }}</td><td>{{ row.costCenterDesc || '-' }}</td><td>{{ row.internalOrder || '-' }}</td><td>{{ row.internalOrderDesc || '-' }}</td><td>{{ row.fixedAssetNo || '-' }}</td><td>{{ row.fixedAssetDesc || '-' }}</td><td>{{ row.salesOrderNo || '-' }}</td><td>{{ row.salesOrderLine || '-' }}</td><td>{{ row.customerName || '-' }}</td><td><span v-if="row.acceptanceAttachment" class="file-link" @click="$emit('file', row.acceptanceAttachment)">{{ row.acceptanceAttachment }}</span><span v-else>-</span></td></tr></tbody></table></div>
+          <div class="footer"><span>共 {{ inboundRows.length }} 条</span><el-pagination :total="inboundRows.length" layout="sizes, prev, pager, next" :page-size="10"></el-pagination></div>
+        </div>
+      </div>`
+  };
+
   const InvoiceCreateView = {
     props: ['fees', 'feeTotal', 'statementTaxIncluded', 'inboundRows'],
     emits: ['file'],
@@ -884,7 +864,7 @@
     template: `
       <div class="detail-card"><div class="small-title"><span><i class="ri-arrow-left-circle-line" style="color:#409eff"></i> 入库单明细查询详情 <el-tag size="small" :type="status==='待确认'?'warning':'success'">{{ status }}</el-tag></span><span><el-button v-if="editable" type="primary" @click="$emit('confirm')">确认</el-button><el-button v-if="editable" type="danger" plain @click="$emit('void')">作废</el-button><el-button>保存</el-button></span></div>
         <div class="section-title">基本信息</div><div class="field-grid"><div class="read-field"><label>应用工厂：</label><span class="read-box">海宁新能源工厂/HN01</span></div><div class="read-field"><label>记账价金额合计：</label><span class="read-box">零元整</span></div><div class="read-field"><label>¥：</label><span class="read-box">0</span></div><div class="read-field"><label>开票价金额合计：</label><span class="read-box">壹仟伍佰玖拾捌元陆角</span></div><div class="read-field"><label>不含税金额：</label><span class="read-box">1598.6</span></div><div class="read-field"><label>含税金额：</label><span class="read-box">{{ amount(statementTaxIncluded) }}</span></div><div class="read-field"><label>入库单号：</label><span class="read-box">见明细信息</span></div></div>
-        <div class="section-title">对账单明细信息</div><div style="padding:0 28px 32px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>序号</th><th>收货日期</th><th>物料编号</th><th>物料描述</th><th>收货数量</th><th>单位</th><th>不含税单价</th><th>不含税金额</th><th>含税金额</th><th>应用工厂</th><th>库位</th><th>ERP采购单号</th></tr></thead><tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.receiptDate }}</td><td>{{ row.materialNo }}</td><td>{{ row.materialDesc }}</td><td>{{ row.qty }}</td><td>{{ row.unit }}</td><td>{{ row.price }}</td><td>{{ row.amount }}</td><td>{{ row.taxIncluded }}</td><td>{{ row.factory }}</td><td>{{ row.location }}</td><td>{{ row.erpPo }}</td></tr></tbody></table></div>
+        <div class="section-title">对账单明细信息</div><div style="padding:0 28px 32px"><div class="table-scroll"><table class="shot-table" style="min-width:2600px"><thead><tr><th>序号</th><th>收货日期</th><th>物料编号</th><th>物料描述</th><th>收货数量</th><th>单位</th><th>不含税单价</th><th>不含税金额</th><th>含税金额</th><th>应用工厂</th><th>库位</th><th>ERP采购单号</th><th>成本中心</th><th>成本中心描述</th><th>内部订单</th><th>内部订单描述</th><th>固定资产号</th><th>固定资产描述</th><th>销售订单号</th><th>销售订单行号</th><th>客户名称</th><th>验收附件</th></tr></thead><tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.receiptDate }}</td><td>{{ row.materialNo }}</td><td>{{ row.materialDesc }}</td><td>{{ row.qty }}</td><td>{{ row.unit }}</td><td>{{ row.price }}</td><td>{{ row.amount }}</td><td>{{ row.taxIncluded }}</td><td>{{ row.factory }}</td><td>{{ row.location }}</td><td>{{ row.erpPo }}</td><td>{{ row.costCenter || '-' }}</td><td>{{ row.costCenterDesc || '-' }}</td><td>{{ row.internalOrder || '-' }}</td><td>{{ row.internalOrderDesc || '-' }}</td><td>{{ row.fixedAssetNo || '-' }}</td><td>{{ row.fixedAssetDesc || '-' }}</td><td>{{ row.salesOrderNo || '-' }}</td><td>{{ row.salesOrderLine || '-' }}</td><td>{{ row.customerName || '-' }}</td><td><span v-if="row.acceptanceAttachment" class="file-link" @click="$emit('view-file', row.acceptanceAttachment)">{{ row.acceptanceAttachment }}</span><span v-else>-</span></td></tr></tbody></table></div>
           <div class="fee-zone"><div class="fee-toolbar"><div class="fee-left"><b>入库单附加费用信息</b><el-button v-if="editable" type="primary" @click="$emit('add')">+ 新增一行数据</el-button><el-button v-if="editable" type="danger" plain @click="$emit('batch-delete')">删除</el-button></div><span class="fee-total">调整合计：{{ amount(feeTotal) }}</span></div>
             <div class="table-scroll"><table class="shot-table"><thead><tr><th style="width:44px"><input v-if="editable" type="checkbox"></th><th>调整类型</th><th>流水号</th><th>历史贴息金额</th><th>调整金额（含税）</th><th>税率</th><th>不含税金额</th><th>备注</th><th>附件</th><th>操作</th></tr></thead><tbody><tr v-for="row in fees" :key="row.id" :data-fee-id="row.id"><td><input v-if="editable" v-model="row.checked" type="checkbox"></td><td><select v-if="editable" v-model="row.type" class="native-select" data-field="adjustment-type" @change="$emit('type-change', row)"><option value="">请选择调整类型</option><option v-for="item in adjustmentTypes" :key="item" :value="item">{{ item }}</option></select><span v-else>{{ row.type }}</span></td><td><div v-if="editable && (row.type==='索赔' || row.type==='贴息')" class="serial-picker" @click.stop="$emit('ledger-open', row)"><input :value="row.serial" data-field="serial" data-action="open-ledger" readonly :placeholder="row.type==='索赔' ? '选择索赔台账' : '选择贴息台账'" @click.stop="$emit('ledger-open', row)"><i class="ri-search-line" data-action="open-ledger" @click.stop="$emit('ledger-open', row)"></i></div><span v-else-if="editable" class="serial-disabled">{{ row.serial || '' }}</span><span v-else>{{ row.serial || '' }}</span></td><td><el-input-number v-if="editable" v-model="row.historyInterest" :precision="2" style="width:100%"></el-input-number><span v-else>{{ displayOptionalAmount(row.historyInterest) }}</span></td><td><el-input-number v-if="editable" v-model="row.amount" :precision="2" style="width:100%" @change="$emit('tax-change', row)"></el-input-number><span v-else>{{ amount(row.amount) }}</span></td><td><el-input-number v-if="editable" v-model="row.taxRate" :min="0" :precision="2" style="width:100%" @change="$emit('tax-change', row)"></el-input-number><span v-else>{{ displayTaxRate(row.taxRate) }}</span></td><td>{{ displayOptionalAmount(taxExcludedAmount(row)) }}</td><td><el-input v-if="editable" v-model="row.remark"></el-input><span v-else>{{ row.remark }}</span></td><td><div v-if="editable" class="upload-box" @click="trigger(row)"><span v-if="row.attachment" class="file-link" @click.stop="$emit('view-file', row.attachment)">{{ row.attachment }}</span><span v-else>上传或者看附件</span><i class="ri-attachment-line"></i><input type="file" hidden :ref="'file'+row.id" @change="$emit('file-change', row, $event)"></div><span v-else-if="row.attachment" class="file-link" @click="$emit('view-file', row.attachment)">{{ row.attachment }}</span></td><td><span v-if="editable" class="delete-text" @click="$emit('delete-row', row)">删除</span><span v-else>-</span></td></tr></tbody></table></div><div class="footer"><span>共 {{ fees.length }} 条，已选 {{ fees.filter(f=>f.checked).length }} 条</span></div>
           </div>
@@ -925,7 +905,7 @@
         <div class="section-title">基本信息</div><div class="field-grid"><div class="read-field"><label>发票保存号：</label><span class="read-box">FP009202606120002</span></div><div class="read-field"><label>发票类型：</label><span class="read-box">纸质发票</span></div><div class="read-field"><label>发票日期：</label><span class="read-box">2026-06-12</span></div><div class="read-field"><label>不含税金额：</label><span class="read-box">3636.3</span></div><div class="read-field"><label>对账单含税金额：</label><span class="read-box">{{ amount(statementTaxIncluded) }}</span></div></div>
         <div class="section-title">发票信息</div><div style="padding:0 28px 20px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>序号</th><th>发票号</th><th>不含税金额</th><th>税率%</th><th>税额</th><th>含税金额</th><th>开票时间</th><th>开票代码</th><th>发票附件</th></tr></thead><tbody><tr><td>1</td><td>26332000004949665201</td><td>3636.3</td><td>0</td><td>0</td><td>3636.3</td><td>2026-06-11</td><td>26332000004949665201</td><td><span class="file-link" @click="$emit('file','22BB23CBFC7F4EDB.pdf')">22BB23CBFC7F4EDB.pdf</span></td></tr><tr><td>合计</td><td></td><td>3636.3000</td><td></td><td>0.0000</td><td>3636.3000</td><td></td><td></td><td></td></tr></tbody></table></div></div>
         <div class="section-title">对账单信息</div><div style="padding:0 28px 20px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>序号</th><th>单据类型</th><th>单据编号</th><th>不含税金额</th><th>含税金额</th><th>单据时间</th></tr></thead><tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.type }}</td><td>{{ row.id }}</td><td>{{ row.amount }}</td><td>{{ row.taxIncluded }}</td><td>{{ row.time }}</td></tr></tbody></table></div></div>
-        <div class="section-title">对账单明细信息</div><div style="padding:0 28px 32px"><div class="table-scroll"><table class="shot-table"><thead><tr><th>序号</th><th>单据类型</th><th>SRM采购单号</th><th>ERP采购单号</th><th>ERP采购单行号</th><th>移动类型</th><th>物料编号</th><th>物料描述</th></tr></thead><tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.type }}</td><td></td><td>{{ row.erpPo }}</td><td>{{ row.erpLine }}</td><td>101</td><td>{{ row.materialNo }}</td><td>{{ row.materialDesc }}</td></tr></tbody></table></div><readonly-fee-table :fees="fees" :fee-total="feeTotal" @file="$emit('file',$event)"></readonly-fee-table></div>
+        <div class="section-title">对账单明细信息</div><div style="padding:0 28px 32px"><div class="table-scroll"><table class="shot-table" style="min-width:2600px"><thead><tr><th>序号</th><th>单据类型</th><th>SRM采购单号</th><th>ERP采购单号</th><th>ERP采购单行号</th><th>移动类型</th><th>物料编号</th><th>物料描述</th><th>成本中心</th><th>成本中心描述</th><th>内部订单</th><th>内部订单描述</th><th>固定资产号</th><th>固定资产描述</th><th>销售订单号</th><th>销售订单行号</th><th>客户名称</th><th>验收附件</th></tr></thead><tbody><tr v-for="(row,index) in inboundRows" :key="row.id"><td>{{ index + 1 }}</td><td>{{ row.type }}</td><td></td><td>{{ row.erpPo }}</td><td>{{ row.erpLine }}</td><td>101</td><td>{{ row.materialNo }}</td><td>{{ row.materialDesc }}</td><td>{{ row.costCenter || '-' }}</td><td>{{ row.costCenterDesc || '-' }}</td><td>{{ row.internalOrder || '-' }}</td><td>{{ row.internalOrderDesc || '-' }}</td><td>{{ row.fixedAssetNo || '-' }}</td><td>{{ row.fixedAssetDesc || '-' }}</td><td>{{ row.salesOrderNo || '-' }}</td><td>{{ row.salesOrderLine || '-' }}</td><td>{{ row.customerName || '-' }}</td><td><span v-if="row.acceptanceAttachment" class="file-link" @click="$emit('file', row.acceptanceAttachment)">{{ row.acceptanceAttachment }}</span><span v-else>-</span></td></tr></tbody></table></div><readonly-fee-table :fees="fees" :fee-total="feeTotal" @file="$emit('file',$event)"></readonly-fee-table></div>
       </div>`
   };
 
@@ -966,25 +946,42 @@
   injectStyles();
   ChintPrototypeShell.registerPageComponent(componentName, {
     ...component,
-    components: { SupplierListView, BuyerListView, InvoiceCreateView, BuyerDetailView, ReconciliationReadonlyView, ReadonlyFeeTable, PaidDetailView, InvoiceCheckView }
+    components: { SupplierListView, BuyerListView, ErpInboundCheckView, InvoiceCreateView, BuyerDetailView, ReconciliationReadonlyView, ReadonlyFeeTable, PaidDetailView, InvoiceCheckView }
   });
 
-  Object.entries({
+  const reconciliationRouteMeta = {
+    [routes.supplierGenerate]: '供应商端入库对账单生成',
     [routes.supplierList]: '供应商端入库对账单列表',
     [routes.supplierInvoice]: '供应商端待开票列表-新增',
+    [routes.buyerErpCheck]: 'ERP入库记录核对',
     [routes.buyerList]: '采购方入库对账单列表',
     [routes.buyerDetail]: '采购方入库对账单详情',
     [routes.buyerPaid]: '采购方供方已开票列表详情',
     [routes.supplierDetail]: '供应商端入库对账单详情',
     [routes.invoiceCheck]: '发票校验单详情',
     [routes.supplierPaid]: '供应商端已开票列表详情'
-  }).forEach(([path, name]) => {
+  };
+
+  const reconciliationMenuKeyMap = {
+    [routes.supplierGenerate]: 'supplierReconciliationGenerate',
+    [routes.supplierList]: 'supplierReconciliationList',
+    [routes.supplierInvoice]: 'supplierInvoiceCreate',
+    [routes.supplierDetail]: 'supplierReconciliationDetailList',
+    [routes.supplierPaid]: 'supplierPaidInvoice',
+    [routes.buyerErpCheck]: 'buyerErpInboundCheck',
+    [routes.buyerList]: 'buyerReconciliationList',
+    [routes.buyerDetail]: 'buyerReconciliationDetailList',
+    [routes.buyerPaid]: 'buyerPaidInvoice',
+    [routes.invoiceCheck]: 'invoiceCheckDetail'
+  };
+
+  Object.entries(reconciliationRouteMeta).forEach(([path, name]) => {
     ChintPrototypeShell.registerRoute({
       path,
       name,
-      menuKey: path.includes('buyer') || path.includes('invoice/check') ? 'buyerReconciliationList' : 'supplierReconciliationList',
+      menuKey: reconciliationMenuKeyMap[path] || 'supplierReconciliationList',
       component: componentName,
-      breadcrumbs: [path.includes('buyer') ? '新能订单管理' : '订单履约协同', name],
+      breadcrumbs: path === routes.buyerErpCheck ? ['新能订单管理', '对账开票管理', name] : ['对账开票协同', name],
       tabInfo: '按截图复刻采购云原系统界面，并叠加待确认、已确认及附加费用维护规则。',
       guideSteps: [{ target: '.shot-root', title: '截图复刻原型', description: '通过顶部演示视角切换查看供应商端和采购方端不同界面。' }],
       noteSections: [{ title: '业务调整', content: '供应商生成对账单后进入待确认，采购方维护附加费用并确认后变为已确认，供应商才可开票。' }]

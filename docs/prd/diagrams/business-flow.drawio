@@ -1,0 +1,146 @@
+<mxfile host="app.diagrams.net" modified="2026-06-01T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="prd-purchase-cost-flow" name="采购云成本管理模块优化业务流程">
+    <mxGraphModel dx="2400" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2300" pageHeight="1180" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PH1" value="阶段1 基础配置" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;fontStyle=1;fontSize=13;fontColor=#0c4a6e;" vertex="1" parent="1">
+          <mxGeometry x="160" y="40" width="420" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PH2" value="阶段2 核算执行" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontStyle=1;fontSize=13;fontColor=#4c1d95;" vertex="1" parent="1">
+          <mxGeometry x="580" y="40" width="470" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PH3" value="阶段3 审批与台账" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontStyle=1;fontSize=13;fontColor=#78350f;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="40" width="470" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PH4" value="阶段4 外部协同" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;fontStyle=1;fontSize=13;fontColor=#14532d;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="40" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PH5" value="阶段5 分析管控" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontStyle=1;fontSize=13;fontColor=#7f1d1d;" vertex="1" parent="1">
+          <mxGeometry x="1880" y="40" width="270" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SW1" value="成本管理员" style="swimlane;startSize=30;horizontal=0;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0284c7;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="130" y="80" width="2020" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="SW2" value="采购员" style="swimlane;startSize=30;horizontal=0;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#7c3aed;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="130" y="260" width="2020" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="SW3" value="采购云" style="swimlane;startSize=30;horizontal=0;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="130" y="450" width="2020" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="SW4" value="外部系统" style="swimlane;startSize=30;horizontal=0;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="130" y="700" width="2020" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="SW5" value="管理层/品类负责人" style="swimlane;startSize=30;horizontal=0;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="130" y="920" width="2020" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="N1" value="维护属性字典与标准值" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0284c7;fontSize=12;" vertex="1" parent="SW1">
+          <mxGeometry x="70" y="55" width="160" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N2" value="维护价格因子与规则库" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0284c7;fontSize=12;" vertex="1" parent="SW1">
+          <mxGeometry x="270" y="55" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N3" value="配置模板并发布校验" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0284c7;fontSize=12;" vertex="1" parent="SW1">
+          <mxGeometry x="480" y="55" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N4" value="创建正式价/预测价核算单" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#7c3aed;fontSize=12;" vertex="1" parent="SW2">
+          <mxGeometry x="600" y="55" width="180" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N5" value="选择物料、月份、供应商" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#7c3aed;fontSize=12;" vertex="1" parent="SW2">
+          <mxGeometry x="830" y="55" width="180" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N6" value="系统：获取 SAP 主数据与 PLM 属性" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d97706;fontSize=12;" vertex="1" parent="SW3">
+          <mxGeometry x="830" y="45" width="200" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N7" value="系统：匹配规则并展示计算过程" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d97706;fontSize=12;" vertex="1" parent="SW3">
+          <mxGeometry x="1080" y="45" width="210" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N8" value="采购云审批通过？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff3bf;strokeColor=#d4a017;fontSize=12;" vertex="1" parent="SW3">
+          <mxGeometry x="1340" y="32" width="110" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="N9" value="同步正式价台账" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d97706;fontSize=12;" vertex="1" parent="SW3">
+          <mxGeometry x="1500" y="45" width="150" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N10" value="同步预测价台账" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d97706;fontSize=12;" vertex="1" parent="SW3">
+          <mxGeometry x="1500" y="155" width="150" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N11" value="OA：调价审批与状态回传" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#16a34a;fontSize=12;" vertex="1" parent="SW4">
+          <mxGeometry x="1510" y="45" width="190" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N12" value="订单测算平台：接收预测价" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#16a34a;fontSize=12;" vertex="1" parent="SW4">
+          <mxGeometry x="1510" y="135" width="190" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N13" value="价格走势/预实/价差/目标绩效" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#dc2626;fontSize=12;" vertex="1" parent="SW5">
+          <mxGeometry x="1640" y="50" width="220" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="N14" value="按品类权限过滤与导出控制" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#dc2626;fontSize=12;" vertex="1" parent="SW5">
+          <mxGeometry x="1900" y="50" width="210" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0284c7;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW1" source="N1" target="N2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0284c7;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW1" source="N2" target="N3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" value="发布模板" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#475569;dashed=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N3" target="N4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="725" y="260" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#7c3aed;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW2" source="N4" target="N5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E5" value="取数" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#475569;dashed=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N5" target="N6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1060" y="450" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E6" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d97706;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW3" source="N6" target="N7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E7" value="提交审批" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d97706;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW3" source="N7" target="N8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E8" value="正式价通过" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#2e8b57;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW3" source="N8" target="N9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E9" value="预测价通过" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#2e8b57;endArrow=block;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" parent="SW3" source="N8" target="N10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1395" y="182" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E10" value="正式价同步 OA" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#475569;dashed=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N9" target="N11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1735" y="700" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E11" value="预测价同步订单测算" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#475569;dashed=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N10" target="N12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1735" y="700" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E12" value="价格数据" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#475569;dashed=1;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="N9" target="N13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1830" y="575" /><mxPoint x="1830" y="970" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E13" value="预测数据" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#475569;dashed=1;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="N10" target="N13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1860" y="685" /><mxPoint x="1860" y="970" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E14" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#dc2626;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="SW5" source="N13" target="N14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E15" value="拒绝：编辑重提" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#dc2626;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="N8" target="N4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1395" y="890" /><mxPoint x="820" y="890" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LG1" value="图例：蓝色=基础配置；紫色=业务发起；橙色=采购云处理；绿色=外部系统；红色=分析管控/异常回退；虚线=系统间同步" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;fontSize=12;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="130" y="1100" width="1060" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

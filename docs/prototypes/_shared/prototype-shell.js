@@ -613,7 +613,7 @@
         }
       },
       template: `
-        <prototype-layout :brand-name="brandName" :brand-icon="brandIcon" brand-href="${HOME_ROUTE_PATH}" :active-menu="currentRoute.menuKey" :active-route="currentRoute.path" :breadcrumbs="currentRoute.breadcrumbs" :open-tabs="openTabs" :active-tab="routeHash" :menus="menus" :menu-switcher="menuSwitcher" v-model:keyword="globalKeyword" :tenant-title="tenantTitle" :tenant-options="tenantOptions" :tenant-data-tour="tenantDataTour" v-model:tenant-value="currentTenant" search-placeholder="搜索功能、菜单、记录" :user-name="userName" :user-role="userRole" @search="runGlobalSearch" @tenant-change="handleTenantChange" @notify="messageOpen = true" @help="noteOpen = true" @guide="guideOpen = true" @user-command="handleUserCommand" @tab-activate="handleTabActivate" @tab-close="handleTabClose">
+        <prototype-layout :brand-name="brandName" :brand-icon="brandIcon" brand-href="${HOME_ROUTE_PATH}" :active-menu="currentRoute.menuKey" :active-route="currentRoute.path" :breadcrumbs="currentRoute.breadcrumbs" :open-tabs="openTabs" :active-tab="routeHash" :menus="menus" :menu-switcher="menuSwitcher" v-model:keyword="globalKeyword" :tenant-title="tenantTitle" :tenant-options="tenantOptions" :tenant-data-tour="tenantDataTour" v-model:tenant-value="currentTenant" :user-name="userName" :user-role="userRole" @search="runGlobalSearch" @tenant-change="handleTenantChange" @notify="messageOpen = true" @help="noteOpen = true" @guide="guideOpen = true" @user-command="handleUserCommand" @tab-activate="handleTabActivate" @tab-close="handleTabClose">
           <template v-slot:topbar-extra>
             <el-tag v-if="lastSearch" size="small" type="info">最近搜索：{{ lastSearch }}</el-tag>
           </template>

@@ -37,7 +37,9 @@
   function findMenuItemForRoute(route, menus) {
     if (!route) return null;
     const menuItems = flattenMenuItems(menus || registry.menus || []);
-    return menuItems.find((item) => item.key === route.menuKey || routeHref(item) === route.path) || null;
+    return menuItems.find((item) => item.key === route.menuKey)
+      || menuItems.find((item) => routeHref(item) === route.path)
+      || null;
   }
 
   // ─── 路由标题与页签元数据 ──────────────────────────────────────────────────────

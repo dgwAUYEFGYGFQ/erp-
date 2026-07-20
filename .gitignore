@@ -1,0 +1,17 @@
+**
+
+!.gitignore
+!README.md
+
+!.github/
+!.github/**
+
+!docs/
+!docs/**
+
+!.trae/
+!.trae/**
+
+.DS_Store
+**/.DS_Store
+**/.$*.bkp

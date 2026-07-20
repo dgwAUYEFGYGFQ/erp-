@@ -110,7 +110,10 @@
         }
       },
       isActive(item) {
-        return this.activeMenu === item.key || (item.route && this.activeRoute === normalizeHash(item.route));
+        if (this.activeMenu) {
+          return this.activeMenu === item.key;
+        }
+        return item.route && this.activeRoute === normalizeHash(item.route);
       }
     },
     template: `
@@ -165,7 +168,7 @@
       brandIcon: { type: String, default: 'ri-cube-2-line' },
       brandHref: { type: String, default: P.HOME_ROUTE_PATH || '#/templates/overview-dashboard-home-page' },
       keyword: { type: String, default: '' },
-      searchPlaceholder: { type: String, default: '搜索功能、菜单、记录' },
+      searchPlaceholder: { type: String, default: '' },
       tenantTitle: { type: String, default: '切换租户' },
       tenantValue: { type: String, default: '' },
       tenantOptions: { type: Array, default: () => [] },
@@ -292,16 +295,15 @@
           </span>
           <span class="topbar-brand-text">{{ brandName }}</span>
         </a>
-        <div class="topbar-center">
-          <div class="topbar-center-spacer"></div>
-          <div class="topbar-search-wrap">
-            <el-input v-model="searchValue" class="topbar-search-input" :placeholder="searchPlaceholder" clearable data-tour="global-search" @keyup.enter="handleSearch">
-              <template v-slot:prefix><i class="ri-search-line"></i></template>
-            </el-input>
-          </div>
-          <div class="topbar-center-extra">
-            <slot name="topbar-extra"></slot>
-          </div>
+        <div class="topbar-main-nav" aria-label="采购云主导航">
+          <span>首页</span>
+          <span>个人中心</span>
+          <span class="active">订单管理</span>
+          <span>供应商管理</span>
+          <span>采购寻源协同</span>
+          <span>订单履约协同</span>
+          <span>日常业务协同</span>
+          <span>客服中心</span>
         </div>
         <div class="topbar-actions" data-tour="topbar-actions">
           <el-dropdown v-if="hasTenantSwitcher" trigger="click" @command="handleTenantChange">
