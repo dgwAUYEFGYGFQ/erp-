@@ -1,0 +1,143 @@
+{
+  "app": {
+    "brandName": "CHINT 采购云",
+    "brandIcon": "ri-menu-fold-line",
+    "fallbackRoute": "#/plan/arrival-plan-list",
+    "user": { "name": "李思锦", "role": "采购计划专员", "avatarText": "李" },
+    "topMenus": [
+      "首页", "个人中心", "基础信息管理", "非生寻源管理", "寻源管理", "合同管理", "成本管理", "电源成本管理", "正泰电器综合管理", "订单管理", "新能源订单管理"
+    ],
+    "messages": [
+      { "id": "MSG-20260810-01", "time": "今天 09:18", "content": "采购云已接收 SAP 接口发送的 18 条到货计划数据。", "type": "success" },
+      { "id": "MSG-20260810-02", "time": "昨天 16:42", "content": "到货计划 AP-20260626-001 已更新至 V3。", "type": "primary" }
+    ],
+    "menus": [
+      { "title": "采购订单管理", "items": [] },
+      { "title": "基础信息管理", "items": [] },
+      { "title": "标签打印管理", "items": [] },
+      { "title": "质量管理", "items": [] },
+      { "title": "对账开票管理", "items": [] },
+      { "title": "计划管理", "items": [
+        { "key": "arrivalPlanList", "label": "到货计划列表", "icon": "ri-calendar-check-line", "route": "#/plan/arrival-plan-list" },
+        { "key": "arrivalTimeliness", "label": "到货及时率", "icon": "ri-line-chart-line", "route": "#/plan/arrival-timeliness" }
+      ] }
+    ]
+  },
+  "arrivalPlanList": {
+    "rows": [
+      { "id": "AP-20260626-001", "requiredDate": "2026-06-26", "planQty": 888888, "supplierCode": "0010001404", "supplierName": "浙江正泰电器股份有限公司", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1001", "factoryName": "正泰低压电器温州生产基地", "workshop": "断路器一车间", "batchQty": 2400, "safetyStock": 3600, "leadTime": "7天", "minPackQty": 12, "minOrderQty": 120, "type": "生产计划", "totalQty": 892488, "mergeFlag": "是", "version": "V3", "status": "已删除" },
+      { "id": "AP-20260625-002", "requiredDate": "2026-06-25", "planQty": 888, "supplierCode": "0010004106", "supplierName": "上海正泰智能科技有限公司", "materialCode": "M100364291", "materialDesc": "交流接触器 CJX2-2510 220V", "categoryCode": "010201", "categoryName": "工业控制电器", "factoryCode": "1002", "factoryName": "上海松江智能制造工厂", "workshop": "接触器装配车间", "batchQty": 600, "safetyStock": 1200, "leadTime": "10天", "minPackQty": 6, "minOrderQty": 60, "type": "补库计划", "totalQty": 2088, "mergeFlag": "否", "version": "V2", "status": "有效" },
+      { "id": "AP-20260625-003", "requiredDate": "2026-06-25", "planQty": 1160, "supplierCode": "0010004106", "supplierName": "上海正泰智能科技有限公司", "materialCode": "M100442806", "materialDesc": "塑壳断路器 NM8N-250S/3300 160A", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1003", "factoryName": "嘉兴智能电气产业园", "workshop": "塑壳二车间", "batchQty": 300, "safetyStock": 900, "leadTime": "15天", "minPackQty": 1, "minOrderQty": 20, "type": "生产计划", "totalQty": 2060, "mergeFlag": "是", "version": "V4", "status": "有效" },
+      { "id": "AP-20260626-004", "requiredDate": "2026-06-26", "planQty": 1450, "supplierCode": "0010001404", "supplierName": "浙江正泰电器股份有限公司", "materialCode": "M100187534", "materialDesc": "剩余电流动作断路器 NXBLE-63 1P+N C20", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1001", "factoryName": "正泰低压电器温州生产基地", "workshop": "漏电断路器车间", "batchQty": 480, "safetyStock": 1440, "leadTime": "7天", "minPackQty": 12, "minOrderQty": 120, "type": "订单计划", "totalQty": 2890, "mergeFlag": "否", "version": "V1", "status": "有效" },
+      { "id": "AP-20260624-005", "requiredDate": "2026-06-24", "planQty": 960, "supplierCode": "0010004106", "supplierName": "上海正泰智能科技有限公司", "materialCode": "M100590142", "materialDesc": "电动机保护断路器 NS2-25 13-18A", "categoryCode": "010201", "categoryName": "工业控制电器", "factoryCode": "1002", "factoryName": "上海松江智能制造工厂", "workshop": "电机保护车间", "batchQty": 240, "safetyStock": 720, "leadTime": "12天", "minPackQty": 4, "minOrderQty": 40, "type": "补库计划", "totalQty": 1680, "mergeFlag": "是", "version": "V2", "status": "有效" },
+      { "id": "AP-20260630-006", "requiredDate": "2026-06-30", "planQty": 100, "supplierCode": "1577G970", "supplierName": "正泰电气股份有限公司", "materialCode": "M100778315", "materialDesc": "万能式断路器 NA8G-3200H 2500A", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "2001", "factoryName": "正泰电气上海生产基地", "workshop": "框架断路器车间", "batchQty": 10, "safetyStock": 20, "leadTime": "30天", "minPackQty": 1, "minOrderQty": 5, "type": "项目计划", "totalQty": 120, "mergeFlag": "否", "version": "V1", "status": "有效" },
+      { "id": "AP-20260623-007", "requiredDate": "2026-06-23", "planQty": 720, "supplierCode": "0010004106", "supplierName": "上海正泰智能科技有限公司", "materialCode": "M100672483", "materialDesc": "热继电器 NXR-25 12-18A", "categoryCode": "010201", "categoryName": "工业控制电器", "factoryCode": "1002", "factoryName": "上海松江智能制造工厂", "workshop": "继电器车间", "batchQty": 360, "safetyStock": 1080, "leadTime": "9天", "minPackQty": 6, "minOrderQty": 60, "type": "订单计划", "totalQty": 1800, "mergeFlag": "是", "version": "V3", "status": "有效" },
+      { "id": "AP-20260609-008", "requiredDate": "2026-06-09", "planQty": 480, "supplierCode": "66554488", "supplierName": "温州正泰电源电器有限公司", "materialCode": "M100803614", "materialDesc": "开关电源 NDR-120-24 24V 5A", "categoryCode": "010301", "categoryName": "电源电器", "factoryCode": "1005", "factoryName": "温州电源电器制造中心", "workshop": "电源装配车间", "batchQty": 120, "safetyStock": 600, "leadTime": "14天", "minPackQty": 1, "minOrderQty": 24, "type": "生产计划", "totalQty": 1080, "mergeFlag": "否", "version": "V2", "status": "有效" },
+      { "id": "AP-20260701-009", "requiredDate": "2026-07-01", "planQty": 3200, "supplierCode": "0010001404", "supplierName": "浙江正泰电器股份有限公司", "materialCode": "M100118406", "materialDesc": "小型断路器 NXB-63 1P C16", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1001", "factoryName": "正泰低压电器温州生产基地", "workshop": "断路器二车间", "batchQty": 1200, "safetyStock": 4800, "leadTime": "7天", "minPackQty": 12, "minOrderQty": 120, "type": "补库计划", "totalQty": 8000, "mergeFlag": "是", "version": "V5", "status": "有效" },
+      { "id": "AP-20260702-010", "requiredDate": "2026-07-02", "planQty": 64, "supplierCode": "1577G970", "supplierName": "正泰电气股份有限公司", "materialCode": "M100990285", "materialDesc": "隔离开关 NH4-125 4P 100A", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "2001", "factoryName": "正泰电气上海生产基地", "workshop": "隔离开关车间", "batchQty": 32, "safetyStock": 64, "leadTime": "18天", "minPackQty": 1, "minOrderQty": 8, "type": "项目计划", "totalQty": 128, "mergeFlag": "否", "version": "V1", "status": "有效" },
+      { "id": "AP-20260703-011", "requiredDate": "2026-07-03", "planQty": 1500, "supplierCode": "66554488", "supplierName": "温州正泰电源电器有限公司", "materialCode": "M100812765", "materialDesc": "浪涌保护器 NU6-II 2P 40kA", "categoryCode": "010401", "categoryName": "电能质量与防雷", "factoryCode": "1005", "factoryName": "温州电源电器制造中心", "workshop": "防雷器件车间", "batchQty": 300, "safetyStock": 900, "leadTime": "11天", "minPackQty": 6, "minOrderQty": 60, "type": "订单计划", "totalQty": 2400, "mergeFlag": "是", "version": "V2", "status": "有效" },
+      { "id": "AP-20260704-012", "requiredDate": "2026-07-04", "planQty": 36, "supplierCode": "0010009821", "supplierName": "正泰集团成套设备制造有限公司", "materialCode": "M101020418", "materialDesc": "低压成套开关柜 GCS 抽屉单元", "categoryCode": "010501", "categoryName": "低压成套设备", "factoryCode": "3002", "factoryName": "杭州成套设备制造基地", "workshop": "低压成套车间", "batchQty": 6, "safetyStock": 12, "leadTime": "25天", "minPackQty": 1, "minOrderQty": 2, "type": "项目计划", "totalQty": 48, "mergeFlag": "否", "version": "V3", "status": "有效" }
+    ],
+    "history": {
+      "AP-20260626-001": [
+        { "requiredDate": "2026-06-24", "planQty": 786400, "supplierCode": "0010001404", "supplierName": "浙江正泰电器股份有限公司", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1001", "factoryName": "正泰低压电器温州生产基地", "workshop": "断路器一车间", "batchQty": 2400, "safetyStock": 3200, "leadTime": "7天", "minPackQty": 12, "minOrderQty": 120, "type": "生产计划", "totalQty": 789600, "mergeFlag": "否", "version": "V1", "updateTime": "2026-06-24 09:15:22", "status": "创建" },
+        { "requiredDate": "2026-06-25", "planQty": 842400, "supplierCode": "0010001404", "supplierName": "浙江正泰电器股份有限公司", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1001", "factoryName": "正泰低压电器温州生产基地", "workshop": "断路器一车间", "batchQty": 2400, "safetyStock": 3400, "leadTime": "7天", "minPackQty": 12, "minOrderQty": 120, "type": "生产计划", "totalQty": 845800, "mergeFlag": "是", "version": "V2", "updateTime": "2026-06-25 11:08:36", "status": "更新" },
+        { "requiredDate": "2026-06-26", "planQty": 888888, "supplierCode": "0010001404", "supplierName": "浙江正泰电器股份有限公司", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "categoryCode": "010101", "categoryName": "低压配电电器", "factoryCode": "1001", "factoryName": "正泰低压电器温州生产基地", "workshop": "断路器一车间", "batchQty": 2400, "safetyStock": 3600, "leadTime": "7天", "minPackQty": 12, "minOrderQty": 120, "type": "生产计划", "totalQty": 892488, "mergeFlag": "是", "version": "V3", "updateTime": "2026-06-26 14:32:18", "status": "删除" }
+      ]
+    }
+  },
+  "arrivalTimeliness": {
+    "defaultMonth": "2026-06",
+    "defaultToleranceDays": 5,
+    "groups": [
+      {
+        "id": "RATE-202606-001",
+        "month": "2026-06",
+        "supplierCode": "0010001404",
+        "supplierName": "浙江正泰电器股份有限公司",
+        "categoryCode": "010101",
+        "categoryName": "低压配电电器",
+        "factoryCode": "1001",
+        "factoryName": "正泰低压电器温州生产基地",
+        "planDetails": [
+          { "planNo": "AP-20260626-001", "requiredDate": "2026-06-26", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "planQty": 888888 }
+        ],
+        "receiptDetails": [
+          { "receiptNo": "GR-20260529-001", "receiptDate": "2026-05-29", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "receiptQty": 120000 },
+          { "receiptNo": "GR-20260625-014", "receiptDate": "2026-06-25", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "receiptQty": 520000 },
+          { "receiptNo": "GR-20260703-006", "receiptDate": "2026-07-03", "materialCode": "M100218768", "materialDesc": "小型断路器 NXB-63 2P C32", "receiptQty": 260000 }
+        ]
+      },
+      {
+        "id": "RATE-202606-002",
+        "month": "2026-06",
+        "supplierCode": "0010004106",
+        "supplierName": "上海正泰智能科技有限公司",
+        "categoryCode": "010201",
+        "categoryName": "工业控制电器",
+        "factoryCode": "1002",
+        "factoryName": "上海松江智能制造工厂",
+        "planDetails": [
+          { "planNo": "AP-20260625-002", "requiredDate": "2026-06-25", "materialCode": "M100364291", "materialDesc": "交流接触器 CJX2-2510 220V", "planQty": 888 },
+          { "planNo": "AP-20260624-005", "requiredDate": "2026-06-24", "materialCode": "M100590142", "materialDesc": "电动机保护断路器 NS2-25 13-18A", "planQty": 960 },
+          { "planNo": "AP-20260623-007", "requiredDate": "2026-06-23", "materialCode": "M100672483", "materialDesc": "热继电器 NXR-25 12-18A", "planQty": 720 }
+        ],
+        "receiptDetails": [
+          { "receiptNo": "GR-20260620-021", "receiptDate": "2026-06-20", "materialCode": "M100364291", "materialDesc": "交流接触器 CJX2-2510 220V", "receiptQty": 900 },
+          { "receiptNo": "GR-20260626-039", "receiptDate": "2026-06-26", "materialCode": "M100590142", "materialDesc": "电动机保护断路器 NS2-25 13-18A", "receiptQty": 700 },
+          { "receiptNo": "GR-20260630-044", "receiptDate": "2026-06-30", "materialCode": "M100672483", "materialDesc": "热继电器 NXR-25 12-18A", "receiptQty": 700 }
+        ]
+      },
+      {
+        "id": "RATE-202606-003",
+        "month": "2026-06",
+        "supplierCode": "0010004106",
+        "supplierName": "上海正泰智能科技有限公司",
+        "categoryCode": "010101",
+        "categoryName": "低压配电电器",
+        "factoryCode": "1003",
+        "factoryName": "嘉兴智能电气产业园",
+        "planDetails": [
+          { "planNo": "AP-20260625-003", "requiredDate": "2026-06-25", "materialCode": "M100442806", "materialDesc": "塑壳断路器 NM8N-250S/3300 160A", "planQty": 1160 }
+        ],
+        "receiptDetails": [
+          { "receiptNo": "GR-20260625-052", "receiptDate": "2026-06-25", "materialCode": "M100442806", "materialDesc": "塑壳断路器 NM8N-250S/3300 160A", "receiptQty": 400 },
+          { "receiptNo": "GR-20260702-009", "receiptDate": "2026-07-02", "materialCode": "M100442806", "materialDesc": "塑壳断路器 NM8N-250S/3300 160A", "receiptQty": 500 }
+        ]
+      },
+      {
+        "id": "RATE-202606-004",
+        "month": "2026-06",
+        "supplierCode": "66554488",
+        "supplierName": "温州正泰电源电器有限公司",
+        "categoryCode": "010301",
+        "categoryName": "电源电器",
+        "factoryCode": "1005",
+        "factoryName": "温州电源电器制造中心",
+        "planDetails": [
+          { "planNo": "AP-20260609-008", "requiredDate": "2026-06-09", "materialCode": "M100803614", "materialDesc": "开关电源 NDR-120-24 24V 5A", "planQty": 480 }
+        ],
+        "receiptDetails": [
+          { "receiptNo": "GR-20260530-004", "receiptDate": "2026-05-30", "materialCode": "M100803614", "materialDesc": "开关电源 NDR-120-24 24V 5A", "receiptQty": 300 },
+          { "receiptNo": "GR-20260610-018", "receiptDate": "2026-06-10", "materialCode": "M100803614", "materialDesc": "开关电源 NDR-120-24 24V 5A", "receiptQty": 180 }
+        ]
+      },
+      {
+        "id": "RATE-202606-005",
+        "month": "2026-06",
+        "supplierCode": "1577G970",
+        "supplierName": "正泰电气股份有限公司",
+        "categoryCode": "010101",
+        "categoryName": "低压配电电器",
+        "factoryCode": "2001",
+        "factoryName": "正泰电气上海生产基地",
+        "planDetails": [
+          { "planNo": "AP-20260630-006", "requiredDate": "2026-06-30", "materialCode": "M100778315", "materialDesc": "万能式断路器 NA8G-3200H 2500A", "planQty": 100 }
+        ],
+        "receiptDetails": [
+          { "receiptNo": "GR-20260708-012", "receiptDate": "2026-07-08", "materialCode": "M100778315", "materialDesc": "万能式断路器 NA8G-3200H 2500A", "receiptQty": 100 }
+        ]
+      }
+    ]
+  }
+}
