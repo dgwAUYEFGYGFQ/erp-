@@ -369,7 +369,6 @@
                 <el-input v-model="filters.supplierName" size="small" clearable placeholder="供应商名称" style="width:180px"></el-input>
                 <el-input v-model="filters.categoryCode" size="small" clearable placeholder="品类编码" style="width:135px"></el-input>
                 <el-input v-model="filters.categoryName" size="small" clearable placeholder="品类名称" style="width:165px"></el-input>
-                <el-input v-model="filters.factory" size="small" clearable placeholder="工厂编码/名称" style="width:170px"></el-input>
                 <div class="arrival-timeliness-tolerance"><span>容差天数</span><el-input-number v-model="filters.toleranceDays" size="small" :min="0" :max="31" controls-position="right" style="width:110px"></el-input-number></div>
                 <div class="arrival-timeliness-query-actions">
                   <el-button type="primary" size="small" @click="queryRows"><i class="ri-search-line"></i><span>查询</span></el-button>
@@ -394,7 +393,6 @@
                 <el-table-column prop="supplierName" label="供应商名称" width="210" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryCode" label="品类编码" width="112"></el-table-column>
                 <el-table-column prop="categoryName" label="品类名称" width="165" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="factoryDisplay" label="工厂" width="220" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="planQty" label="计划到货数量" width="125" align="right"><template v-slot:default="scope">{{ formatNumber(scope.row.planQty) }}</template></el-table-column>
                 <el-table-column prop="actualQty" label="实际收货数量" width="125" align="right"><template v-slot:default="scope">{{ formatNumber(scope.row.actualQty) }}</template></el-table-column>
                 <el-table-column prop="toleranceDays" label="容差天数" width="95" align="center"><template v-slot:default="scope">{{ scope.row.toleranceDays }} 天</template></el-table-column>
@@ -549,7 +547,7 @@
     tabInfo: '帮助采购计划与供应协同人员按供应商、月份和品类核对 SAP 计划与收货数据的到货及时率。',
     guideSteps: [
       { target: '[data-tour="arrival-timeliness-toolbar"]', title: '核对计划与收货区间', description: '工具栏并列展示当前计划取数区间与收货取数区间，便于在查看统计结果前确认计算边界。' },
-      { target: '[data-tour="arrival-timeliness-filter"]', title: '设定统计口径', description: '选择必填考核月份并组合供应商、品类、工厂和容差天数，点击查询后分别确定计划取数区间与收货取数区间。' },
+      { target: '[data-tour="arrival-timeliness-filter"]', title: '设定统计口径', description: '选择必填考核月份并组合供应商、品类和容差天数，点击查询后分别确定计划取数区间与收货取数区间。' },
       { target: '[data-tour="arrival-timeliness-table"]', title: '核对固定维度结果', description: '按供应商、考核月份和品类查看计划量、实际收货量、两类取数区间和及时率。' },
       { target: '[data-tour="arrival-timeliness-dialog"]', title: '追溯计算明细', description: '计划页签仅展示区间内最新有效计划及数量合计；收货页签展示当前供应商、品类、工厂在收货区间内的记录及数量合计。' }
     ],
