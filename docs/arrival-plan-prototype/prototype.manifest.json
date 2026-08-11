@@ -1,0 +1,86 @@
+{
+  "manifestVersion": "1.0.0",
+  "generatedAt": "2026-08-10T21:15:00+08:00",
+  "updatedBy": "C.UI-Prototype-Editor",
+  "project": {
+    "brandName": "CHINT 采购云",
+    "brandIcon": "ri-menu-fold-line",
+    "entry": "docs/prototypes/Layout.html#/plan/arrival-plan-list",
+    "fallbackRoute": "#/plan/arrival-plan-list",
+    "routeCount": 2,
+    "moduleCount": 1,
+    "usesECharts": false,
+    "usesTenant": false,
+    "usesMenuSwitcher": false
+  },
+  "modules": [
+    {
+      "moduleName": "计划管理",
+      "slug": "plan",
+      "icon": "ri-calendar-check-line",
+      "menuKey": "arrivalPlanList",
+      "entryRoute": "#/plan/arrival-plan-list",
+      "crossModuleTargets": [],
+      "routes": [
+        {
+          "path": "#/plan/arrival-plan-list",
+          "name": "到货计划列表",
+          "menuKey": "arrivalPlanList",
+          "component": "ArrivalPlanListPage",
+          "componentFile": "docs/prototypes/modules/plan/arrival-plan-list.js",
+          "templateId": "query-table-list-page",
+          "archetype": "查询表格列表页",
+          "breadcrumbs": ["计划管理", "到货计划列表"],
+          "tabInfo": "帮助采购计划与供应协同人员查询 SAP 接口发送、采购云接收的到货计划，并追溯同一业务记录的历史版本。",
+          "guideStepCount": 4,
+          "noteSectionTitles": ["业务目标与适用角色", "数据接收与处理范围", "版本流转", "上下游关系", "业务边界"],
+          "dataKeys": ["arrivalPlanList"],
+          "linkedBusinessObjects": ["到货计划", "历史版本"],
+          "outboundRoutes": [],
+          "keyInteractions": ["组合筛选", "条件展开收起", "横向滚动表格", "分页切换", "历史记录模态弹窗"]
+        },
+        {
+          "path": "#/plan/arrival-timeliness",
+          "name": "到货及时率",
+          "menuKey": "arrivalTimeliness",
+          "component": "ArrivalTimelinessPage",
+          "componentFile": "docs/prototypes/modules/plan/arrival-timeliness.js",
+          "templateId": "kpi-filter-table-page",
+          "archetype": "KPI筛选表格页",
+          "breadcrumbs": ["计划管理", "到货及时率"],
+          "tabInfo": "帮助采购计划与供应协同人员按供应商、月份和品类核对 SAP 计划与收货数据的到货及时率。",
+          "guideStepCount": 4,
+          "noteSectionTitles": ["业务目标与适用角色", "统计口径", "数据流与上下游", "上下游关系", "业务边界"],
+          "dataKeys": ["arrivalTimeliness"],
+          "linkedBusinessObjects": ["到货计划", "收货记录", "到货及时率"],
+          "outboundRoutes": [],
+          "keyInteractions": ["必填月份查询", "供应商与品类筛选", "容差天数重算", "KPI汇总", "横向滚动表格", "分页切换", "计划与收货明细弹窗"]
+        }
+      ]
+    }
+  ],
+  "sharedAssets": {
+    "layoutFile": "docs/prototypes/Layout.html",
+    "dataFile": "docs/prototypes/data.json",
+    "styles": [
+      "docs/prototypes/_shared/Shared.css",
+      "docs/prototypes/_shared/Layout.css",
+      "docs/prototypes/theme/blue.css",
+      "docs/prototypes/theme/light.css",
+      "docs/prototypes/theme/dark.css"
+    ],
+    "runtimeScripts": [
+      "docs/prototypes/_shared/prototype-core.js",
+      "docs/prototypes/_shared/prototype-menu.js",
+      "docs/prototypes/_shared/prototype-data.js",
+      "docs/prototypes/_shared/prototype-route.js",
+      "docs/prototypes/_shared/prototype-components.js",
+      "docs/prototypes/_shared/prototype-shell.js"
+    ]
+  },
+  "qualitySnapshot": {
+    "routesMissingGuideSteps": [],
+    "routesMissingNoteSections": [],
+    "orphanedMenuKeys": []
+  }
+}
